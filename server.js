@@ -1,6 +1,6 @@
 const express = require('express');
 const dotenv = require('dotenv');
-const connectDB = require('./config/db');
+// const connectDB = require('./config/db');
 const app = express();
 
 process.on('uncaughtException', err => {
@@ -15,8 +15,10 @@ dotenv.config({
 
 app.use(express.json());
 
-connectDB();
-const server = app.listen(process.env.PORT, () => console.log(`Server is running on port ${process.env.PORT} in ${process.env.NODE_ENV} mode.`));
+app.use('/api', require('./routes/auth.route'));
+
+// connectDB();
+const server = app.listen(process.env.PORT, () => console.log(`Server is running on port ${process.env.PORT}`));
 
 process.on('unhandledRejection', err => {
   console.log(`ERROR : ${err.message}`);

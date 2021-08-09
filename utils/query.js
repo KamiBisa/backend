@@ -19,7 +19,7 @@ const query = (queryStr) => {
       if (err) throw err;
       conn.query(queryStr, function (err, result) {
         if (err) throw err;
-        console.log(result);
+        return result;
       });
     });
   } catch (err) {
