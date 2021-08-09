@@ -1,7 +1,6 @@
 const express = require('express');
 const dotenv = require('dotenv');
 const connectDB = require('./config/db');
-const query = require('./utils/query');
 const app = express();
 
 process.on('uncaughtException', err => {
