@@ -1,5 +1,17 @@
 const query = require('./query');
 
+const clearDB = () => {
+  query(`
+    DROP DATABASE IF EXISTS ${process.env.DB_NAME}
+  `)
+  query(`
+    CREATE DATABASE ${process.env.DB_NAME}
+  `)
+  query(`
+    USE ${process.env.DB_NAME}
+  `)
+}
+
 const createUserTable = () => {
   query(`
     CREATE TABLE users (
@@ -32,7 +44,9 @@ const createDonationProgramTable = () => {
       name VARCHAR(100) NOT NULL,
       image_url VARCHAR(100) NOT NULL,
       is_verified INT NOT NULL,
-      goal INT NOT NULL
+      goal INT NOT NULL,
+      FOREIGN KEY(wallet_id) REFERENCES ewallets(wallet_id),
+      FOREIGN KEY(user_id) REFERENCES users(user_id)
     )
   `)
 }
@@ -57,33 +71,20 @@ const createDonationTable = () => {
       program_id INT NOT NULL,
       user_id INT NOT NULL,
       timestamp DATE NOT NULL,
-      amount INT NOT NULL
+      amount INT NOT NULL,
+      FOREIGN KEY(user_id) REFERENCES users(user_id),
+      FOREIGN KEY(program_id) REFERENCES donation_programs(program_id)
     )
   `)
 }
 
-const alterTable = () => {
-  query(`
-    ALTER TABLE donation_programs
-    ADD FOREIGN KEY(user_id) REFERENCES users(user_id)
-  `)
-  query(`
-    ALTER TABLE donation_programs
-    ADD FOREIGN KEY(wallet_id) REFERENCES ewallets(wallet_id)
-  `)
-  query(`
-    ALTER TABLE donations
-    ADD FOREIGN KEY(program_id) REFERENCES donation_programs(program_id)
-  `)
-  query(`
-    ALTER TABLE donations
-    ADD FOREIGN KEY(user_id) REFERENCES users(user_id)
-  `)
-}
+exports.initDB = () => {
+  clearDB();
+  createUserTable();
+  createEWalletTable();
+  createDonationProgramTable();
+  createWithdrawalTable();
+  createDonationTable();
 
-createUserTable();
-createEWalletTable();
-createDonationProgramTable();
-createWithdrawalTable();
-createDonationTable();
-alterTable();
+  console.log("db initialized");
+}
