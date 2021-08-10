@@ -112,8 +112,6 @@ const authControllers = {
         })
       }
     });
-
-    // console.log(userData)
   }
 }
 
