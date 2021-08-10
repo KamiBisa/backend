@@ -112,6 +112,23 @@ const authControllers = {
         })
       }
     });
+  },
+  getUserInfo: (req, res) => {
+    const id = req.user.user_id;
+
+    User.findById(id, (err, data) => {
+      if (err) {
+        return res.status(500).json({
+          success: false,
+          message: err.message
+        })
+      } else {
+        return res.status(200).json({
+          success: true,
+          user: data
+        })
+      }
+    })
   }
 }
 

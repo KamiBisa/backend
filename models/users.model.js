@@ -82,7 +82,7 @@ User.updateById = (id, user, result) => {
         return;
       }
 
-      console.log("updated user: ", { id: id, ...user });
+      // console.log("updated user: ", { id: id, ...user });
       result(null, { id: id, ...user });
     }
   );
