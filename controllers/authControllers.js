@@ -85,7 +85,7 @@ const authControllers = {
       message: 'User has been logout.'
     })
   },
-  toogleVerifyFundraiser: (req, res) => {
+  verifyFundraiser: (req, res) => {
     const {id, verify} = req.params;
     User.findById(id, (err, data) => {
       if (err) {
@@ -110,7 +110,7 @@ const authControllers = {
       }
     });
   },
-  getUserInfo: (req, res) => {
+  userInfo: (req, res) => {
     const id = req.user.user_id;
 
     User.findById(id, (err, data) => {
