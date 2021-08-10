@@ -86,7 +86,7 @@ const authControllers = {
     })
   },
   toogleVerifyFundraiser: (req, res) => {
-    const {id} = req.params;
+    const {id, verify} = req.params;
     User.findById(id, (err, data) => {
       if (err) {
         return res.status(500).json({
@@ -99,7 +99,7 @@ const authControllers = {
           username: data.username,
           password: data.password,
           role: data.role,
-          is_verified: data.is_verified
+          is_verified: verify
         }, (err, data) => {
           return res.status(200).json({
             success: true,
