@@ -23,9 +23,7 @@ const authControllers = {
             role
           });
           if (role === 'donor')
-            user.is_verified = 1;
-          else
-            user.is_verified = 0;
+            user.is_verified = true;
 
           User.create(user, (err, data) => {
             if (err) {
@@ -96,13 +94,12 @@ const authControllers = {
           message: `User with id ${id} not found.`
         })
       } else {
-        let isFundraiserVerified = (data.is_verified === 0) ? 1 : 0;
 
         User.updateById(id, {
           username: data.username,
           password: data.password,
           role: data.role,
-          is_verified: isFundraiserVerified
+          is_verified: data.is_verified
         }, (err, data) => {
           return res.status(200).json({
             success: true,

@@ -4,7 +4,6 @@ const User = function(user) {
   this.username = user.username;
   this.password = user.password;
   this.role = user.role;
-  this.is_verified = user.is_verified
 }
 
 User.create = (newUser, result) => {

@@ -18,8 +18,8 @@ const createUserTable = () => {
       user_id INT PRIMARY KEY AUTO_INCREMENT,
       username VARCHAR(50) NOT NULL,
       password VARCHAR(125) NOT NULL,
-      role VARCHAR(12) NOT NULL,
-      is_verified INT NOT NULL
+      role VARCHAR(12) NOT NULL CHECK(role IN('donor', 'fundraiser', 'admin')),
+      is_verified BOOLEAN DEFAULT NULL
     )
   `);
 }
@@ -43,7 +43,7 @@ const createDonationProgramTable = () => {
       wallet_id INT NOT NULL,
       name VARCHAR(100) NOT NULL,
       image_url VARCHAR(100) NOT NULL,
-      is_verified INT NOT NULL,
+      is_verified BOOLEAN DEFAULT NULL,
       goal INT NOT NULL,
       FOREIGN KEY(wallet_id) REFERENCES ewallets(wallet_id),
       FOREIGN KEY(user_id) REFERENCES users(user_id)
@@ -56,7 +56,7 @@ const createWithdrawalTable = () => {
     CREATE TABLE withdrawals(
       withdrawal_id INT PRIMARY KEY AUTO_INCREMENT,
       program_id INT NOT NULL,
-      is_verified INT NOT NULL,
+      is_verified BOOLEAN DEFAULT NULL,
       amount INT NOT NULL,
       timestamp DATE NOT NULL,
       FOREIGN KEY(program_id) REFERENCES donation_programs(program_id)
