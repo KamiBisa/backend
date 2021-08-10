@@ -86,6 +86,34 @@ const authControllers = {
       success: true,
       message: 'User has been logout.'
     })
+  },
+  toogleVerifyFundraiser: (req, res) => {
+    const {id} = req.params;
+    User.findById(id, (err, data) => {
+      if (err) {
+        return res.status(500).json({
+          success: false,
+          message: `User with id ${id} not found.`
+        })
+      } else {
+        let isFundraiserVerified = (data.is_verified === 0) ? 1 : 0;
+
+        User.updateById(id, {
+          username: data.username,
+          password: data.password,
+          role: data.role,
+          is_verified: isFundraiserVerified
+        }, (err, data) => {
+          return res.status(200).json({
+            success: true,
+            message: `Fundraiser status with id ${id} has been changed.`,
+            user: data
+          })
+        })
+      }
+    });
+
+    // console.log(userData)
   }
 }
 
