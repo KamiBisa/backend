@@ -48,7 +48,7 @@ const createEWalletTable = () => {
   conn.query(`
     CREATE TABLE ewallets (
       wallet_id INT PRIMARY KEY AUTO_INCREMENT,
-      user_id INT NOT NULL,
+      user_id INT NULL,
       balance INT NOT NULL,
       FOREIGN KEY(user_id) REFERENCES users(user_id)
     )
