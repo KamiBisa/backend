@@ -18,12 +18,12 @@ app.use(cookieParser());
 
 app.use('/api', require('./routes/auth.route'));
 
-const server = app.listen(process.env.PORT, () => console.log(`Server is running on port ${process.env.PORT}`));
+module.exports = app;
 
-process.on('unhandledRejection', err => {
-  console.log(`ERROR : ${err.message}`);
-  console.log('Shutting down server due to unhandled rejection');
-  server.close(() => {
-    process.exit(1);
-  })
-})
+// process.on('unhandledRejection', err => {
+//   console.log(`ERROR : ${err.message}`);
+//   console.log('Shutting down server due to unhandled rejection');
+//   server.close(() => {
+//     process.exit(1);
+//   })
+// })

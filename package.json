@@ -7,10 +7,13 @@
     "doc": "docs"
   },
   "scripts": {
-    "start": "node server.js",
-    "dev": "nodemon server",
-    "db-create": "node utils/createDB",
-    "db-init": "node utils/setupDB"
+    "start": "node app.js",
+    "dev": "nodemon app",
+    "db-init": "node -e 'require(\"./models/db/setup\").initDB()'",
+    "test": "npm run db-init; jest --silent=false"
+  },
+  "jest": {
+    "verbose": true
   },
   "repository": {
     "type": "git",
@@ -32,6 +35,8 @@
     "mysql": "^2.18.1"
   },
   "devDependencies": {
-    "nodemon": "^2.0.12"
+    "jest": "^27.0.6",
+    "nodemon": "^2.0.12",
+    "supertest": "^6.1.4"
   }
 }
