@@ -4,7 +4,7 @@ const app = require('../../server')
 // this test depends on register functionality
 
 describe('logout', () => {
-    it.only("login and log back out", done => {
+    it.only("register then logout", done => {
         const donor = {"username":"donor@logout", "password":"asd", "role":"donor"}
 
         request(app)
@@ -18,7 +18,7 @@ describe('logout', () => {
                 const jwt = res.body.token
 
                 request(app)
-                .post("/api/postLogout")
+                .get("/api/getLogout")
                 .set("Cookie", "auth_token="+jwt)
                 .expect(200)
                 .end((err, res) => {
