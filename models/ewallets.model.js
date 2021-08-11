@@ -13,12 +13,12 @@ EWallet.create = (newEWallet, result) => {
       return;
     }
 
-    result(null, {id: res.insertId, ...newEWallet});
+    result(null, {wallet_id: res.insertId, ...newEWallet});
   })
 }
 
-EWallet.findById = (walletId, result) => {
-  sql.query(`SELECT * FROM ewallets WHERE wallet_id = ${walletId}`, (err, res) => {
+EWallet.findByUserId = (userId, result) => {
+  sql.query(`SELECT * FROM ewallets WHERE user_id = ${userId}`, (err, res) => {
     if (err) {
       console.log(`Error: ${err}`);
       result(err, null);
@@ -34,8 +34,8 @@ EWallet.findById = (walletId, result) => {
   })
 }
 
-EWallet.updateById = (id, wallet, result) => {
-  sql.query("UPDATE ewallets SET balance = ? WHERE wallet_id = ?", [wallet.balance, id], (err, res) => {
+EWallet.updateByUserId = (id, wallet, result) => {
+  sql.query("UPDATE ewallets SET balance = ? WHERE user_id = ?", [wallet.balance, id], (err, res) => {
     if (err) {
       console.log(`Error: ${err}`);
       result(null, err);
@@ -47,7 +47,7 @@ EWallet.updateById = (id, wallet, result) => {
       return;
     }
 
-    result(null, {id: id, ...wallet});
+    result(null, {user_id: id, ...wallet});
   })
 }
 

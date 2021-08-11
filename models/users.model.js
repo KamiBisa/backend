@@ -14,7 +14,7 @@ User.create = (newUser, result) => {
       return;
     }
 
-    result(null, {id: res.insertId, ...newUser});
+    result(null, {user_id: res.insertId, ...newUser});
   })
 }
 
