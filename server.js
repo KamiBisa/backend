@@ -17,6 +17,7 @@ app.use(express.json());
 app.use(cookieParser());
 
 app.use('/api', require('./routes/auth.route'));
+app.use('/api', require('./routes/ewallet.route'));
 
 module.exports = app;
 
