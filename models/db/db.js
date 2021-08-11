@@ -1,10 +1,6 @@
 const mysql = require('mysql');
-const dotenv = require('dotenv');
-const initializer = require('./setup');
-
-dotenv.config({
-  path: './config/.env'
-});
+require('dotenv').config({path:__dirname+'/../../config/.env'});
+// require('./setup').initDB();
 
 const connection = mysql.createConnection({
   host: process.env.DB_HOST,
@@ -16,7 +12,6 @@ const connection = mysql.createConnection({
 connection.connect(error => {
   if (error) throw error;
   console.log('Successfully connected to database.');
-  initializer.initDB();
 })
 
 module.exports = connection;

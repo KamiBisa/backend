@@ -1,19 +1,39 @@
-const query = require('./query');
+const mysql = require('mysql');
+require('dotenv').config({path:__dirname+'/../../config/.env'});
+
+// get db credentials from config
+const config = {
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+};
+const conn = mysql.createConnection(config);
+
+// connect to db
+const connectDB = () => {
+  try {
+    conn.connect(function(err) {
+      if (err) throw err;
+    });
+  } catch (err) {
+    console.log(err.message);
+  }
+}
 
 const clearDB = () => {
-  query(`
+  conn.query(`
     DROP DATABASE IF EXISTS ${process.env.DB_NAME}
   `)
-  query(`
+  conn.query(`
     CREATE DATABASE ${process.env.DB_NAME}
   `)
-  query(`
+  conn.query(`
     USE ${process.env.DB_NAME}
   `)
 }
 
 const createUserTable = () => {
-  query(`
+  conn.query(`
     CREATE TABLE users (
       user_id INT PRIMARY KEY AUTO_INCREMENT,
       username VARCHAR(50) NOT NULL,
@@ -25,7 +45,7 @@ const createUserTable = () => {
 }
 
 const createEWalletTable = () => {
-  query(`
+  conn.query(`
     CREATE TABLE ewallets (
       wallet_id INT PRIMARY KEY AUTO_INCREMENT,
       user_id INT NOT NULL,
@@ -36,7 +56,7 @@ const createEWalletTable = () => {
 }
 
 const createDonationProgramTable = () => {
-  query(`
+  conn.query(`
     CREATE TABLE donation_programs(
       program_id INT PRIMARY KEY AUTO_INCREMENT,
       user_id INT NOT NULL,
@@ -52,7 +72,7 @@ const createDonationProgramTable = () => {
 }
 
 const createWithdrawalTable = () => {
-  query(`
+  conn.query(`
     CREATE TABLE withdrawals(
       withdrawal_id INT PRIMARY KEY AUTO_INCREMENT,
       program_id INT NOT NULL,
@@ -65,7 +85,7 @@ const createWithdrawalTable = () => {
 }
 
 const createDonationTable = () => {
-  query(`
+  conn.query(`
     CREATE TABLE donations(
       donation_id INT PRIMARY KEY AUTO_INCREMENT,
       program_id INT NOT NULL,
@@ -79,12 +99,14 @@ const createDonationTable = () => {
 }
 
 exports.initDB = () => {
+  connectDB();
   clearDB();
   createUserTable();
   createEWalletTable();
   createDonationProgramTable();
   createWithdrawalTable();
   createDonationTable();
+  conn.end()
 
   console.log("db initialized");
 }
