@@ -1,4 +1,5 @@
 const sql = require('./db/db');
+const Ewallet = require('./../models/ewallets.model');
 
 const User = function(user) {
   this.username = user.username;
@@ -7,12 +8,19 @@ const User = function(user) {
 }
 
 User.create = (newUser, result) => {
+  // create user account
   sql.query("INSERT INTO users SET ?", newUser, (err, res) => {
     if (err) {
       console.log(`Error : ${err}`);
       result(err, null);
       return;
     }
+    // create user's ewallet after user creation
+    const userWallet = new Ewallet({
+      user_id: res.insertId,
+      balance: 0
+    })
+    Ewallet.create(userWallet, (err, data) => {})
 
     result(null, {user_id: res.insertId, ...newUser});
   })

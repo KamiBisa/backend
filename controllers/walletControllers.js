@@ -48,7 +48,7 @@ const walletControllers = {
 
         if (type === 'increase') 
           balance += req.body.balance;
-        else {
+        else if (type === 'decrease') {
           if ((balance === 0) || (balance - req.body.balance < 0)) {
             return res.status(400).json({
               success: false,
