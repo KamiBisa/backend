@@ -2,10 +2,14 @@ const EWallet = require('./../models/ewallets.model');
 
 const walletControllers = {
   createEWallet: (req, res) => {
-    const {user_id} = req.user;
-    const data = {
-      user_id,
+    const {user_id} = req.body;
+
+    let data = {
       balance: 0
+    }
+
+    if (user_id) {
+      data.user_id = user_id;
     }
 
     EWallet.create(data, (err, data) => {
