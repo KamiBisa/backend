@@ -17,8 +17,8 @@ EWallet.create = (newEWallet, result) => {
   })
 }
 
-EWallet.findByUserId = (userId, result) => {
-  sql.query(`SELECT * FROM ewallets WHERE user_id = ${userId}`, (err, res) => {
+EWallet.findById = (walletId, result) => {
+  sql.query(`SELECT * FROM ewallets WHERE wallet_id = ${walletId}`, (err, res) => {
     if (err) {
       console.log(`Error: ${err}`);
       result(err, null);
@@ -34,8 +34,8 @@ EWallet.findByUserId = (userId, result) => {
   })
 }
 
-EWallet.updateByUserId = (id, wallet, result) => {
-  sql.query("UPDATE ewallets SET balance = ? WHERE user_id = ?", [wallet.balance, id], (err, res) => {
+EWallet.updateById = (id, wallet, result) => {
+  sql.query("UPDATE ewallets SET balance = ? WHERE wallet_id = ?", [wallet.balance, id], (err, res) => {
     if (err) {
       console.log(`Error: ${err}`);
       result(null, err);
@@ -47,7 +47,7 @@ EWallet.updateByUserId = (id, wallet, result) => {
       return;
     }
 
-    result(null, {user_id: id, ...wallet});
+    result(null, {wallet_id: id, ...wallet});
   })
 }
 

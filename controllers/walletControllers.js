@@ -27,15 +27,14 @@ const walletControllers = {
     })
   },
   updateEWallet: (req, res) => {
-    const {type} = req.params;
-    const {user_id} = req.user;
+    const {id, type} = req.params;
 
-    EWallet.findByUserId(user_id, (err, data) => {
+    EWallet.findById(id, (err, data) => {
       if (err) {
         if (err.kind === 'not_found') {
           return res.status(404).json({
             success: false,
-            message: `E-Wallet with userId ${user_id} not found.`
+            message: `E-Wallet with id ${id} not found.`
           })
         } else {
           return res.status(500).json({
@@ -45,7 +44,7 @@ const walletControllers = {
         }
       } else {
         let balance = data.balance;
-        const walletId = data.wallet_id;
+        const user_id = data.user_id
 
         if (type === 'increase') 
           balance += req.body.balance;
@@ -59,7 +58,7 @@ const walletControllers = {
           balance -= req.body.balance;
         }
 
-        EWallet.updateByUserId(user_id, {balance}, (err, data) => {
+        EWallet.updateById(id, {balance}, (err, data) => {
           if (err)
             return res.status(500).json({
               success: false,
@@ -69,7 +68,7 @@ const walletControllers = {
           return res.status(200).json({
             success: true,
             eWallet: {
-              wallet_id: walletId,
+              user_id,
               ...data
             }
           })
