@@ -8,6 +8,9 @@ Backend for final project of team KamiBisa
       - [Register](#register)
       - [Login](#login)
       - [Logout](#logout)
+    - [Ewallet](#ewallet)
+      - [Add money](#add-money)
+      - [Deduct money](#deduct-money)
       - [endpoint](#endpoint)
 ## Usage
 
@@ -132,6 +135,84 @@ Keep-Alive: timeout=5
 {
     "success": true,
     "message": "User has been logout."
+}
+```
+
+### Ewallet
+
+#### Add money
+
+Request
+```
+POST /api/postUpdateEWallet/3/increase HTTP/1.1
+Content-Type: application/json
+Accept: */*
+Host: localhost:8080
+Connection: keep-alive
+Content-Length: 20
+Cookie: auth_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwiaWF0IjoxNjI4Nzc2NzM4LCJleHAiOjE2MjkzODE1Mzh9.yS53JZq_Chdj5-kAtcz8IYD_GUZduZgI0JfZok79g64
+ 
+{
+    "balance":10
+}
+```
+
+Response
+```
+HTTP/1.1 200 OK
+X-Powered-By: Express
+Content-Type: application/json; charset=utf-8
+Content-Length: 70
+ETag: W/"46-bIhIZMlmRvFnmLhFN2qrMlEXLzs"
+Date: Thu, 12 Aug 2021 13:59:22 GMT
+Connection: keep-alive
+Keep-Alive: timeout=5
+ 
+{
+    "success": true,
+    "eWallet": {
+        "user_id": 17,
+        "wallet_id": "3",
+        "balance": 10
+    }
+}
+```
+
+#### Deduct money
+
+Request
+```
+POST /api/postUpdateEWallet/3/decrease HTTP/1.1
+Content-Type: application/json
+Accept: */*
+Host: localhost:8080
+Connection: keep-alive
+Content-Length: 19
+Cookie: auth_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwiaWF0IjoxNjI4Nzc2NzM4LCJleHAiOjE2MjkzODE1Mzh9.yS53JZq_Chdj5-kAtcz8IYD_GUZduZgI0JfZok79g64
+ 
+{
+    "balance":5
+}
+```
+
+Response
+```
+HTTP/1.1 200 OK
+X-Powered-By: Express
+Content-Type: application/json; charset=utf-8
+Content-Length: 69
+ETag: W/"45-GVaDRJMNTxLZh8ByhCSshHEW+/k"
+Date: Thu, 12 Aug 2021 13:59:45 GMT
+Connection: keep-alive
+Keep-Alive: timeout=5
+
+{
+    "success": true,
+    "eWallet": {
+        "user_id": 17,
+        "wallet_id": "3",
+        "balance": 5
+    }
 }
 ```
 
