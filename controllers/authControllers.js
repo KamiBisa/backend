@@ -22,8 +22,6 @@ const authControllers = {
             password: hash_password,
             role
           });
-          if (role === 'donor')
-            user.is_verified = true;
 
           User.create(user, (err, data) => {
             if (err) {
@@ -32,7 +30,7 @@ const authControllers = {
                 message: err.message
               })
             } else {
-              sendToken(user, 200, res, data.id);
+              sendToken(user, 200, res, data.user_id);
             }
           })
         }

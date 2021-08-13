@@ -64,16 +64,19 @@ ___
     sql.query("INSERT INTO ewallets SET ?", newEWallet, (err, res) => {
     ```
 
-    admin notification creation at
-    ```
+    admin notification creation at [notif.model.js](../models/notif.model.js)
+    ```js
+    // send notif if user is a fundraiser
+    sql.query("INSERT INTO notifications SET ?", notification, (err, res) => {
     ```
 
 3. GIVEN I am an Admin \
     WHEN there is a new proposal of Fundraiser registration \
     THEN I can choose to verify or reject Fundraiser registration
 
-    See notifications at
+    View notifications with API call at
     ```
+    GET /api/notif/view/fundraisers HTTP/1.1
     ```
 
     Update verification status at
@@ -116,6 +119,11 @@ ___
     WHEN There is a new donation program created \
     THEN I can choose to verify or reject the program
 
+    View notifications with API call at
+    ```
+    GET /api/notif/view/programs HTTP/1.1
+    ```
+
 11. GIVEN I am a Fundraiser \
     WHEN I visit my dashboard \
     THEN I can see list of my donation programs
@@ -131,6 +139,11 @@ ___
 14. GIVEN I am an Admin \
     WHEN There is a new withdrawal from donation program \
     THEN I can choose to reject or accept the withdrawal
+
+    View notifications with API call at
+    ```
+    GET /api/notif/view/withdrawals HTTP/1.1
+    ```
 
 15. GIVEN I am a Fundraiser \
     WHEN My withdrawal is accepted by the admin \

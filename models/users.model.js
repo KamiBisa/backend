@@ -1,5 +1,6 @@
 const sql = require('./db/db');
-const Ewallet = require('./../models/ewallets.model');
+const Ewallet = require('./ewallets.model');
+const Notification = require('./notifications.model')
 
 const User = function(user) {
   this.username = user.username;
@@ -8,19 +9,33 @@ const User = function(user) {
 }
 
 User.create = (newUser, result) => {
-  // create user account
+  // REQUIREMENT 1
+  // GIVEN I am an unregistered user
+  // WHEN I register as Donor
+  // THEN the system should record it as a new Donor
+  if (newUser.role === 'donor')
+    newUser.is_verified = true  
+
   sql.query("INSERT INTO users SET ?", newUser, (err, res) => {
     if (err) {
       console.log(`Error : ${err}`);
       result(err, null);
       return;
     }
+    
     // create user's ewallet after user creation
     const userWallet = new Ewallet({
       user_id: res.insertId,
       balance: 0
     })
     Ewallet.create(userWallet, (err, data) => {})
+    
+    // REQUIREMENT 2
+    // GIVEN I am an unregistered user
+    // WHEN I register as Fundraiser
+    // THEN the system should notify admin that a new Fundraiser registration has been made
+    if (newUser.role === 'fundraiser')
+      Notification.newFundraiserAccount(res.insertId)
 
     result(null, {user_id: res.insertId, ...newUser});
   })
