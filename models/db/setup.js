@@ -98,6 +98,20 @@ const createDonationTable = () => {
   `)
 }
 
+const createNotificationTable = () => {
+  conn.query(`
+    CREATE TABLE notifications(
+      notification_id INT PRIMARY KEY AUTO_INCREMENT,
+      user_id INT NULL,
+      program_id INT NULL,
+      withdrawal_id INT NULL,
+      FOREIGN KEY(user_id) REFERENCES users(user_id),
+      FOREIGN KEY(program_id) REFERENCES donation_programs(program_id),
+      FOREIGN KEY(withdrawal_id) REFERENCES withdrawals(withdrawal_id)
+    )
+  `)
+}
+
 exports.initDB = () => {
   connectDB();
   clearDB();
@@ -106,6 +120,7 @@ exports.initDB = () => {
   createDonationProgramTable();
   createWithdrawalTable();
   createDonationTable();
+  createNotificationTable();
   conn.end()
 
   console.log("db initialized");
