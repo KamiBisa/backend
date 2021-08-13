@@ -36,3 +36,13 @@ exports.authorizeRoles = (...roles) => {
     next();
   }
 }
+
+exports.isVerifiedFundraiser = (req, res, next) => {
+  if (req.user.is_verified === null) {
+    return res.status(400).json({
+      success: false,
+      message: 'Fundraiser is not verified yet.'
+    })
+  }
+  next();
+}
