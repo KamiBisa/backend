@@ -1,6 +1,6 @@
 const router = require('express').Router();
-const notifControllers = require('./../controllers/notifControllers');
-const {isAuthenticated, authorizeRoles} = require('./../middlewares/auth');
+const notifControllers = require('../controllers/notifControllers');
+const {isAuthenticated, authorizeRoles} = require('../middlewares/auth');
 
 router.route('/view').get(
     isAuthenticated,

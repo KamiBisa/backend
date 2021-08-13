@@ -26,10 +26,10 @@ ___
     ```js
     sql.query("INSERT INTO users SET ?", newUser, (err, res) => {
     ```
-    immediately verified at [authControllers.js](../controllers/authControllers.js)
+    immediately verified
     ```js
-    if (role === 'donor')
-        user.is_verified = true;
+    if (newUser.role === 'donor')
+        newUser.is_verified = true
     ```
 
     triggers ewallet creation query at [ewallets.model.js](../models/ewallets.model.js)
@@ -76,7 +76,7 @@ ___
 
     View notifications with API call at
     ```
-    GET /api/notif/view/fundraisers HTTP/1.1
+    GET /api/notification/view/fundraisers HTTP/1.1
     ```
 
     Update verification status at
@@ -121,7 +121,7 @@ ___
 
     View notifications with API call at
     ```
-    GET /api/notif/view/programs HTTP/1.1
+    GET /api/notification/view/programs HTTP/1.1
     ```
 
 11. GIVEN I am a Fundraiser \
@@ -142,7 +142,7 @@ ___
 
     View notifications with API call at
     ```
-    GET /api/notif/view/withdrawals HTTP/1.1
+    GET /api/notification/view/withdrawals HTTP/1.1
     ```
 
 15. GIVEN I am a Fundraiser \

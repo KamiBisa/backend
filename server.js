@@ -18,7 +18,7 @@ app.use(cookieParser());
 
 app.use('/api', require('./routes/auth.route'));
 app.use('/api', require('./routes/ewallet.route'));
-app.use('/api/notif', require('./routes/notif.route'));
+app.use('/api/notification', require('./routes/notification.route'));
 
 module.exports = app;
 
