@@ -85,6 +85,10 @@ const authControllers = {
   },
   verifyFundraiser: (req, res) => {
     const {id, verify} = req.params;
+    let newStatus;
+    if (verify === 'true') newStatus = 1;
+    else newStatus = null;
+
     User.findById(id, (err, data) => {
       if (err) {
         return res.status(500).json({
@@ -92,12 +96,11 @@ const authControllers = {
           message: `User with id ${id} not found.`
         })
       } else {
-
         User.updateById(id, {
           username: data.username,
           password: data.password,
           role: data.role,
-          is_verified: verify
+          is_verified: newStatus
         }, (err, data) => {
           return res.status(200).json({
             success: true,
