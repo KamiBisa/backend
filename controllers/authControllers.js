@@ -30,7 +30,7 @@ const authControllers = {
                 message: err.message
               })
             } else {
-              sendToken(user, 200, res, data.id);
+              sendToken(user, 200, res, data.user_id);
             }
           })
         }
