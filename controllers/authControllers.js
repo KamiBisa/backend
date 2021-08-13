@@ -22,8 +22,6 @@ const authControllers = {
             password: hash_password,
             role
           });
-          if (role === 'donor')
-            user.is_verified = true;
 
           User.create(user, (err, data) => {
             if (err) {
