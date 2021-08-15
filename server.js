@@ -27,6 +27,7 @@ app.use('/api/authentication', require('./routes/auth.route'));
 app.use('/api/ewallet', require('./routes/ewallet.route'));
 app.use('/api/notification', require('./routes/notification.route'));
 app.use('/api/donation_program', require('./routes/donationProgram.route'));
+app.use('/api/donation', require('./routes/donation.route'));
 
 module.exports = app;
 
