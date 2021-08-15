@@ -134,13 +134,19 @@ const donationProgramControllers = {
   verifiedDonationProgram: (req, res) => {
     DonationProgram.selectByVerify(true, (err, data) => {
       if (err) {
+        if (err.kind === 'not_found') {
+          return res.status(404).json({
+            success: false,
+            message: 'There\'s no verified donation program recently.'
+          })
+        }
         return res.status(500).json({
           success: false,
           message: err.message
         })
       }
       
-      return res.status(200).json({
+      return res.status(200).json({ 
         success: true,
         donation_program: data
       })
