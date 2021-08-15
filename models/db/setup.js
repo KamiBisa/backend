@@ -39,6 +39,7 @@ const createUserTable = () => {
       fullname VARCHAR(50) NOT NULL,
       username VARCHAR(50) NOT NULL,
       email VARCHAR(100) NOT NULL,
+      avatar VARCHAR(125),
       password VARCHAR(125) NOT NULL,
       role VARCHAR(12) NOT NULL CHECK(role IN('donor', 'fundraiser', 'admin')),
       is_verified BOOLEAN DEFAULT NULL
