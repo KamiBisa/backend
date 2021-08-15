@@ -1,6 +1,6 @@
 #!/bin/sh
 
-APPNAME="compfesthospital"
+APPNAME="kamibisabackend"
 
 # create the heroku app
 heroku apps:create $APPNAME
