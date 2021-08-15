@@ -4,9 +4,9 @@ const sendToken = require('./../utils/sendToken');
 
 const authControllers = {
   register: (req, res) => {
-    const {username, password, role} = req.body;
+    const {fullname, email, username, password, role} = req.body;
 
-    if (!username || !password || !role) {
+    if (!username || !password || !role || !fullname || !email) {
       return res.status(400).json({
         success: false,
         message: 'Please fill up every field.'
@@ -18,6 +18,8 @@ const authControllers = {
         if (err.kind === 'not_found') {
           const hash_password = await bcrypt.hash(password, 12);
           const user = new User({
+            fullname,
+            email,
             username,
             password: hash_password,
             role
