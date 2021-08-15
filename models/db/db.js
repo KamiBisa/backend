@@ -11,6 +11,7 @@ if (process.env.DATABASE_URL) {
   })
 
   connection.query = async (query) => {
+    let queryResult = []
     pool.connect((err, client, release) => {
       if (err) {
         return console.error('Error acquiring client', err.stack)
@@ -20,9 +21,10 @@ if (process.env.DATABASE_URL) {
         if (err) {
           return console.error('Error executing query', query, err.stack)
         }
-        return result.rows
+        queryResult =  result.rows
       })
     })
+    return queryResult
   }
 
   connection.queryOrder = (queries) => {
