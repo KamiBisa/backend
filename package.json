@@ -2,7 +2,7 @@
   "name": "backend",
   "version": "1.0.0",
   "description": "Backend for final project of team KamiBisa",
-  "main": "index.js",
+  "main": "app.js",
   "directories": {
     "doc": "docs"
   },
