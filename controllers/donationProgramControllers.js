@@ -4,7 +4,7 @@ const cloudinary = require('cloudinary');
 
 const donationProgramControllers = {
   createDonationProgram: (req, res) => {
-    const {name, image, goal} = req.body;
+    const {description, name, image, goal} = req.body;
 
     EWallet.create({user_id: null, balance: 0}, async(err, data) => {
       if (err) {
@@ -24,6 +24,7 @@ const donationProgramControllers = {
           user_id: req.user.user_id,
           wallet_id,
           name,
+          description,
           image_url: imageResult.secure_url,
           is_verified: null,
           goal
