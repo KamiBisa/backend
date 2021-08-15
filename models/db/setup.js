@@ -36,7 +36,9 @@ const createUserTable = () => {
   conn.query(`
     CREATE TABLE users (
       user_id INT PRIMARY KEY AUTO_INCREMENT,
+      fullname VARCHAR(50) NOT NULL,
       username VARCHAR(50) NOT NULL,
+      email VARCHAR(100) NOT NULL,
       password VARCHAR(125) NOT NULL,
       role VARCHAR(12) NOT NULL CHECK(role IN('donor', 'fundraiser', 'admin')),
       is_verified BOOLEAN DEFAULT NULL
@@ -62,6 +64,7 @@ const createDonationProgramTable = () => {
       user_id INT NOT NULL,
       wallet_id INT NOT NULL,
       name VARCHAR(100) NOT NULL,
+      description VARCHAR(1000) NOT NULL,
       image_url VARCHAR(100) NOT NULL,
       is_verified BOOLEAN DEFAULT NULL,
       goal INT NOT NULL,
