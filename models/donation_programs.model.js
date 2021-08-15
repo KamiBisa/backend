@@ -1,4 +1,5 @@
 const sql = require('./db/db');
+const Notification = require('./notifications.model');
 
 const DonationProgram = function(donationProgram) {
   this.user_id = donationProgram.user_id;
@@ -17,6 +18,7 @@ DonationProgram.create = (newDonationProgram, result) => {
       return;
     }
 
+    Notification.newDonationProgram(res.insertId);
     result(null, {program_id: res.insertId, ...newDonationProgram});
   })
 }
