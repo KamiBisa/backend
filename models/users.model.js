@@ -3,6 +3,8 @@ const Ewallet = require('./ewallets.model');
 const Notification = require('./notifications.model')
 
 const User = function(user) {
+  this.fullname = user.fullname;
+  this.email = user.email;
   this.username = user.username;
   this.password = user.password;
   this.role = user.role;

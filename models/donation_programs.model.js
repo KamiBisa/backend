@@ -4,6 +4,7 @@ const DonationProgram = function(donationProgram) {
   this.user_id = donationProgram.user_id;
   this.wallet_id = donationProgram.wallet_id;
   this.name = donationProgram.name;
+  this.description = donationProgram.description;
   this.image_url = donationProgram.image_url;
   this.goal = donationProgram.goal;
 }
