@@ -6,6 +6,13 @@ const donationProgramControllers = {
   createDonationProgram: (req, res) => {
     const {description, name, image, goal} = req.body;
 
+    if (!description || !name || !goal) {
+      return res.status(500).json({
+        success: false,
+        message: 'Please provide every field.'
+      })
+    }
+
     EWallet.create({user_id: null, balance: 0}, async(err, data) => {
       if (err) {
         return res.status(500).json({
