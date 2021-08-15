@@ -14,7 +14,7 @@ heroku git:remote -a $APPNAME
 heroku addons:create heroku-postgresql:hobby-dev
 
 # deploy
-git push heroku main
+git push heroku deploy
 
 # open the app
 heroku open
