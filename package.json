@@ -11,7 +11,7 @@
     "dev": "nodemon app",
     "db-init": "node -e 'require(\"./models/db/setup\").initDB()'",
     "test": "npm run db-init; jest --silent=false",
-    "deploy": "utils/deploy.sh"
+    "deploy": "npm run db-init && npm run start"
   },
   "jest": {
     "verbose": true
