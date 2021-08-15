@@ -1,6 +1,6 @@
 let connection = {}
 
-if (process.env.DATABASE_URL) {
+// if (process.env.DATABASE_URL) {
   // on heroku
   const { Pool } = require('pg')
   const pool = new Pool({
@@ -47,26 +47,26 @@ if (process.env.DATABASE_URL) {
 
   console.log('Successfully connected to postgres db.')
 
-} else {
-  // on local
-  const mysql = require('mysql')
-  require('dotenv').config({path:__dirname+'/../../config/.env'})
+// } else {
+//   // on local
+//   const mysql = require('mysql')
+//   require('dotenv').config({path:__dirname+'/../../config/.env'})
   
-  connection = mysql.createConnection({
-    host: process.env.DB_HOST,
-    user: process.env.DB_USER,
-    password: process.env.DB_PASSWORD,
-    database: process.env.DB_NAME
-  })
+//   connection = mysql.createConnection({
+//     host: process.env.DB_HOST,
+//     user: process.env.DB_USER,
+//     password: process.env.DB_PASSWORD,
+//     database: process.env.DB_NAME
+//   })
   
-  connection.connect(error => {
-    if (error) throw error;
-    console.log('Successfully connected to mysql db.')
-  })
+//   connection.connect(error => {
+//     if (error) throw error;
+//     console.log('Successfully connected to mysql db.')
+//   })
 
-  connection.query = (query) => {
-    connection.query(query)
-  }
-}
+//   connection.query = (query) => {
+//     connection.query(query)
+//   }
+// }
 
 module.exports = connection
