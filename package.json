@@ -10,7 +10,8 @@
     "start": "node app.js",
     "dev": "nodemon app",
     "db-init": "node -e 'require(\"./models/db/setup\").initDB()'",
-    "test": "npm run db-init; jest --silent=false"
+    "test": "npm run db-init; jest --silent=false",
+    "deploy": "utils/deploy.sh"
   },
   "jest": {
     "verbose": true
@@ -34,7 +35,8 @@
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
     "jsonwebtoken": "^8.5.1",
-    "mysql": "^2.18.1"
+    "mysql": "^2.18.1",
+    "pg": "^8.7.1"
   },
   "devDependencies": {
     "jest": "^27.0.6",

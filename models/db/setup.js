@@ -1,24 +1,5 @@
-const mysql = require('mysql');
-require('dotenv').config({path:__dirname+'/../../config/.env'});
-
-// get db credentials from config
-const config = {
-  host: process.env.DB_HOST,
-  user: process.env.DB_USER,
-  password: process.env.DB_PASSWORD,
-};
-const conn = mysql.createConnection(config);
-
-// connect to db
-const connectDB = () => {
-  try {
-    conn.connect(function(err) {
-      if (err) throw err;
-    });
-  } catch (err) {
-    console.log(err.message);
-  }
-}
+const connection = require('./db')
+let conn = require('./db')
 
 const clearDB = () => {
   conn.query(`
@@ -116,16 +97,102 @@ const createNotificationTable = () => {
   `)
 }
 
+const clearDBPG = `
+    DROP TABLE IF EXISTS
+    users, ewallets, donations, notifications, donation_programs, withdrawals CASCADE
+  `
+
+const createUserTablePG = `
+    CREATE TABLE users (
+      user_id SERIAL PRIMARY KEY,
+      fullname VARCHAR(50) NOT NULL,
+      username VARCHAR(50) NOT NULL,
+      email VARCHAR(100) NOT NULL,
+      avatar VARCHAR(125),
+      password VARCHAR(125) NOT NULL,
+      role VARCHAR(12) NOT NULL CHECK(role IN('donor', 'fundraiser', 'admin')),
+      is_verified BOOLEAN DEFAULT NULL
+    );
+  `
+
+const createEWalletTablePG = `
+    CREATE TABLE ewallets (
+      wallet_id SERIAL PRIMARY KEY,
+      user_id INT NULL REFERENCES users(user_id),
+      balance INT NOT NULL
+    );
+  `
+
+const createDonationProgramTablePG = `
+    CREATE TABLE donation_programs(
+      program_id SERIAL PRIMARY KEY,
+      user_id INT NOT NULL REFERENCES users(user_id),
+      wallet_id INT NOT NULL REFERENCES ewallets(wallet_id),
+      name VARCHAR(100) NOT NULL,
+      description VARCHAR(1000) NOT NULL,
+      image_url VARCHAR(100) NOT NULL,
+      is_verified BOOLEAN DEFAULT NULL,
+      goal INT NOT NULL
+    );
+  `
+
+const createWithdrawalTablePG = `
+    CREATE TABLE withdrawals(
+      withdrawal_id SERIAL PRIMARY KEY,
+      program_id INT NOT NULL REFERENCES donation_programs(program_id),
+      is_verified BOOLEAN DEFAULT NULL,
+      amount INT NOT NULL,
+      timestamp DATE NOT NULL
+    );
+  `
+
+const createDonationTablePG = `
+    CREATE TABLE donations(
+      donation_id SERIAL PRIMARY KEY,
+      program_id INT NOT NULL REFERENCES donation_programs(program_id),
+      user_id INT NOT NULL REFERENCES users(user_id),
+      timestamp DATE NOT NULL,
+      amount INT NOT NULL
+    );
+  `
+
+const createNotificationTablePG = `
+    CREATE TABLE notifications(
+      notification_id SERIAL PRIMARY KEY,
+      user_id INT NULL REFERENCES users(user_id),
+      program_id INT NULL REFERENCES donation_programs(program_id),
+      withdrawal_id INT NULL REFERENCES withdrawals(withdrawal_id)
+    );
+  `
+
 exports.initDB = () => {
-  connectDB();
-  clearDB();
-  createUserTable();
-  createEWalletTable();
-  createDonationProgramTable();
-  createWithdrawalTable();
-  createDonationTable();
-  createNotificationTable();
-  conn.end()
+  console.log("initializing db");
+
+  if (process.env.DATABASE_URL) {
+    // using pg
+    console.log("postgres");
+    connection.queryOrder(
+      [
+        clearDBPG,
+        createUserTablePG,
+        createEWalletTablePG,
+        createDonationProgramTablePG,
+        createWithdrawalTablePG,
+        createDonationTablePG,
+        createNotificationTablePG,
+      ]
+    )
+  } else {
+    // using mysql
+    console.log("mysql");
+    clearDB();
+    createUserTable();
+    createEWalletTable();
+    createDonationProgramTable();
+    createWithdrawalTable();
+    createDonationTable();
+    createNotificationTable();
+  }
 
   console.log("db initialized");
 }
