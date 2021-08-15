@@ -2,6 +2,7 @@ const express = require('express');
 const dotenv = require('dotenv');
 const cookieParser = require('cookie-parser');
 const cloudinary = require('cloudinary');
+const cors = require('cors');
 const app = express();
 
 process.on('uncaughtException', err => {
@@ -20,6 +21,7 @@ cloudinary.config({
   api_secret: process.env.CLOUDINARY_API_SECRET
 })
 
+app.use(cors());
 app.use(express.json());
 app.use(cookieParser());
 
@@ -30,12 +32,3 @@ app.use('/api/donation_program', require('./routes/donationProgram.route'));
 app.use('/api/donation', require('./routes/donation.route'));
 
 module.exports = app;
-
-// process.on('unhandledRejection', err => {
-//   console.log(`ERROR : ${err.stack}`);
-//   console.log('Shutting down server due to unhandled rejection');
-//   // server.close(() => {
-//   //   process.exit(1);
-//   // })
-//   process.exit(1)
-// })
