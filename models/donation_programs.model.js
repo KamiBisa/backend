@@ -53,7 +53,7 @@ DonationProgram.selectByVerify = (status, result) => {
       return;
     }
 
-    result({kind: "not_found"}, null);
+    return result({kind: "not_found"}, null);
   })
 }
 
