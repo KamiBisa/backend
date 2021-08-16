@@ -131,8 +131,8 @@ const donationProgramControllers = {
       }
     })
   },
-  verifiedDonationProgram: async(req, res) => {
-    await DonationProgram.selectByVerify(true, (err, data) => {
+  verifiedDonationProgram: (req, res) => {
+    DonationProgram.selectByVerify(true, (err, data) => {
       if (err) {
         if (err.kind === 'not_found') {
           return res.status(404).json({
