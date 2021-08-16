@@ -40,8 +40,9 @@ DonationProgram.findById = (programId, result) => {
   })
 }
 
-DonationProgram.selectByVerify = async(status, result) => {
-  await sql.query(`SELECT * FROM donation_programs WHERE is_verified = ${status}`, (err, res) => {
+DonationProgram.selectByVerify = (status, result) => {
+  console.log('hit');
+  sql.query(`SELECT * FROM donation_programs WHERE is_verified = ${status}`, (err, res) => {
     if (err) {
       console.log(`Error: ${err.message}`);
       result(err, null);
