@@ -1,9 +1,18 @@
 const app = require('./server');
+const db = require('./db/db');
 
 app.get('/', (req, res) => {
-    res.json({
-        success: true
-    })
+    db.query("SELECT * FROM users")
+        .catch(err)
+        .then(data => {
+            res.json({
+                success: true,
+                user: data
+            })
+        })
+    // res.json({
+    //     success: true
+    // })
 })
 
 app.listen(process.env.PORT, () => {
