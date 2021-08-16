@@ -146,7 +146,7 @@ const donationProgramControllers = {
         })
       }
       
-      return res.status(200).json({ 
+      res.status(200).json({ 
         success: true,
         donation_program: data
       })
