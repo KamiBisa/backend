@@ -129,6 +129,21 @@ const withdrawalControllers = {
         })
       }
     })
+  },
+  allWithdrawals: (req, res) => {
+    Withdrawal.getAll((err, data) => {
+      if (err) {
+        return res.status(400).json({
+          success: false,
+          message: err.message
+        })
+      }
+
+      return res.status(200).json({
+        success: true,
+        withdrawal: data
+      })
+    });
   }
 };
 

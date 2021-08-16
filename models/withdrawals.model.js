@@ -53,4 +53,16 @@ Withdrawal.updateById = (id, withdrawal, result) => {
   })
 }
 
+Withdrawal.getAll = result => {
+  sql.query("SELECT * FROM withdrawals", (err, res) => {
+    if (err) {
+      console.log("error: ", err);
+      result(null, err);
+      return;
+    }
+
+    result(null, res);
+  });
+};
+
 module.exports = Withdrawal;
