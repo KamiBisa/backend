@@ -3,12 +3,14 @@ const db = require('./db/db');
 
 app.get('/', (req, res) => {
     db.query("SELECT * FROM users")
-        .catch(err)
         .then(data => {
             res.json({
                 success: true,
                 user: data
             })
+        })
+        .catch(err => {
+            res.json(err);
         })
     // res.json({
     //     success: true
