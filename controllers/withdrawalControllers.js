@@ -59,6 +59,76 @@ const withdrawalControllers = {
         })
       }
     })
+  },
+  verifyWithdraw: (req, res) => {
+    const {withdrawalId, status} = req.params;
+    let newStatus = (status === 'true') ? 1 : null;
+
+    if (newStatus === null) {
+      return res.status(400).json({
+        success: false,
+        message: 'Withdrawal application has been rejected.'
+      })
+    }
+
+    Withdrawal.findById(withdrawalId, (err, data) => {
+      if (err) {
+        if (err.kind === 'not_found') {
+          return res.status(404).json({
+            success: false,
+            message: `Withdrawal with id ${withdrawalId} not found.`
+          })
+        } else {
+          return res.status(500).json({
+            success: false,
+            message: err.message
+          })
+        }
+      } else {
+        const {program_id, amount} = data;
+
+        DonationProgram.findById(program_id, (err, data) => {
+          if (err) {
+            return res.status(400).json({
+              success: false,
+              message: err.message
+            })
+          } else {
+            const {wallet_id, user_id} = data;
+
+            Withdrawal.updateById(withdrawalId, {
+              is_verified: newStatus
+            }, (err, data) => {
+              if (err) {
+                return res.status(400).json({
+                  success: false,
+                  message: err.message
+                })
+              }
+            })
+
+            EWallet.deductBalance(wallet_id, amount);
+
+            EWallet.findByUserId(user_id, (err, data) => {
+              if (err) {
+                return res.status(400).json({
+                  success: false,
+                  message: err.message
+                })
+              } else {
+                const {wallet_id} = data;
+                EWallet.increaseBalance(wallet_id, amount);
+
+                return res.status(200).json({
+                  success: true,
+                  message: 'Withdrawal has been approved.'
+                })
+              }
+            })
+          }
+        })
+      }
+    })
   }
 };
 
