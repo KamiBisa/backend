@@ -10,8 +10,8 @@ const DonationProgram = function(donationProgram) {
   this.goal = donationProgram.goal;
 }
 
-DonationProgram.create = (newDonationProgram, result) => {
-  sql.query("INSERT INTO donation_programs SET ?", newDonationProgram, (err, res) => {
+DonationProgram.create = async(newDonationProgram, result) => {
+  await sql.query("INSERT INTO donation_programs SET ?", newDonationProgram, (err, res) => {
     if (err) {
       console.log(`Error: ${err}`);
       result(err, null);
