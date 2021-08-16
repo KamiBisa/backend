@@ -3,9 +3,6 @@
   "version": "1.0.0",
   "description": "Backend for final project of team KamiBisa",
   "main": "app.js",
-  "engines": {
-    "node": ">=0.12"
-  },
   "directories": {
     "doc": "docs"
   },
