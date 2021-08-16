@@ -1,4 +1,5 @@
 const User = require('./../models/users.model');
+const Donation = require('./../models/donations.model');
 const bcrypt = require('bcrypt');
 const sendToken = require('./../utils/sendToken');
 const cloudinary = require('cloudinary');
@@ -123,6 +124,7 @@ const authControllers = {
   },
   userInfo: (req, res) => {
     const id = req.user.user_id;
+    let userData = {};
 
     User.findById(id, (err, data) => {
       if (err) {
@@ -131,9 +133,20 @@ const authControllers = {
           message: err.message
         })
       } else {
-        return res.status(200).json({
-          success: true,
-          user: data
+        userData.user = data;
+        Donation.findByUserId(userData.user.user_id, (err, data) => {
+          if (err) {
+            return res.status(400).json({
+              success: false,
+              message: err.message
+            })
+          }
+
+          userData.history = data;
+          return res.status(200).json({
+            success: true,
+            userData
+          })
         })
       }
     })
