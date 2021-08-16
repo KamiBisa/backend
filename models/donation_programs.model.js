@@ -10,8 +10,8 @@ const DonationProgram = function(donationProgram) {
   this.goal = donationProgram.goal;
 }
 
-DonationProgram.create = async(newDonationProgram, result) => {
-  await sql.query("INSERT INTO donation_programs SET ?", newDonationProgram, (err, res) => {
+DonationProgram.create = (newDonationProgram, result) => {
+  sql.query("INSERT INTO donation_programs SET ?", newDonationProgram, (err, res) => {
     if (err) {
       console.log(`Error: ${err}`);
       result(err, null);
@@ -40,8 +40,8 @@ DonationProgram.findById = (programId, result) => {
   })
 }
 
-DonationProgram.selectByVerify = (status, result) => {
-  sql.query(`SELECT * FROM donation_programs WHERE is_verified = ${status}`, (err, res) => {
+DonationProgram.selectByVerify = async(status, result) => {
+  await sql.query(`SELECT * FROM donation_programs WHERE is_verified = ${status}`, (err, res) => {
     if (err) {
       console.log(`Error: ${err.message}`);
       result(err, null);
