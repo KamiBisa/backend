@@ -2,7 +2,7 @@ const app = require('./server');
 const db = require('./models/db/db');
 
 app.get('/', (req, res) => {
-    db.query("SELECT * FROM users;")
+    db.query(`SELECT * FROM users;`)
         .then(data => {
             res.json({
                 success: true,
