@@ -41,8 +41,9 @@ DonationProgram.findById = (programId, result) => {
 }
 
 DonationProgram.selectByVerify = (status, result) => {
-  console.log('hit');
+  console.log('hit 1');
   sql.query(`SELECT * FROM donation_programs WHERE is_verified = ${status}`, (err, res) => {
+    console.log('hit2');
     if (err) {
       console.log(`Error: ${err.message}`);
       result(err, null);
