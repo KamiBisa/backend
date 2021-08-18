@@ -5,7 +5,7 @@ const Notification = require('../models/notifications.model')
 
 const withdrawalControllers = {
   withdrawDonationProgram: (req, res) => {
-    const {programId: program_id} = req.params;
+    const {program_id} = req.params;
     const {amount} = req.body;
 
     if (!amount) {

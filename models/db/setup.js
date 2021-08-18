@@ -82,7 +82,7 @@ const createWithdrawalTable = () => {
       program_id INT NOT NULL,
       is_verified BOOLEAN DEFAULT NULL,
       amount INT NOT NULL,
-      timestamp DATE NOT NULL,
+      timestamp TIMESTAMP NOT NULL,
       FOREIGN KEY(program_id) REFERENCES donation_programs(program_id)
     )
   `)
@@ -94,7 +94,7 @@ const createDonationTable = () => {
       donation_id INT PRIMARY KEY AUTO_INCREMENT,
       program_id INT NOT NULL,
       user_id INT NOT NULL,
-      timestamp DATE NOT NULL,
+      timestamp TIMESTAMP NOT NULL,
       amount INT NOT NULL,
       FOREIGN KEY(user_id) REFERENCES users(user_id),
       FOREIGN KEY(program_id) REFERENCES donation_programs(program_id)
