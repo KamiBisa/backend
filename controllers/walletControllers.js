@@ -47,7 +47,7 @@ const walletControllers = {
         const user_id = data.user_id
 
         if (type === 'increase') 
-          balance += req.body.balance;
+          balance += req.body.amount;
         else if (type === 'decrease') {
           if ((balance === 0) || (balance - req.body.balance < 0)) {
             return res.status(400).json({
@@ -55,7 +55,7 @@ const walletControllers = {
               message: 'Can\'t deduct balance.'
             })
           }
-          balance -= req.body.balance;
+          balance -= req.body.amount;
         }
 
         EWallet.updateById(id, {balance}, (err, data) => {

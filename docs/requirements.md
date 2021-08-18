@@ -153,6 +153,20 @@ ___
     WHEN I visit my e-wallet menu \
     THEN I can top-up balance to my e-wallet
 
+    Add balance to ewallet with API call at
+    ```
+    POST /api/ewallet/postUpdateEWallet/1/increase HTTP/1.1
+    Content-Type: application/json
+    Cookie: auth_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaWF0IjoxNjI5MjYzMDUxLCJleHAiOjE2Mjk4Njc4NTF9.NzdTOzfRkH2i9CRpgDkjOxCSp3z-0r6OJYxhejfcN_0
+    
+    {
+        "amount":5
+    }
+    ```
+    note: 
+    - 1 is the user_id of the donor
+    - must be logged in as a donor
+
 9. GIVEN I am a Fundraiser \
     WHEN I create new donation program \
     THEN The system should notify the admin that a new donation program is created
