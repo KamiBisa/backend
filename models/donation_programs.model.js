@@ -18,6 +18,10 @@ DonationProgram.create = (newDonationProgram, result) => {
       return;
     }
 
+    // REQUIREMENT 9
+    // GIVEN I am a Fundraiser
+    // WHEN I create new donation program
+    // THEN The system should notify the admin that a new donation program is created
     Notification.newDonationProgram(res.insertId);
     result(null, {program_id: res.insertId, ...newDonationProgram});
   })
@@ -74,8 +78,15 @@ DonationProgram.selectByUserId = (userId, result) => {
   })
 }
 
+// REQUIREMENT 12
+// GIVEN I am a Fundraiser
+// WHEN I click any of my donation programs
+// THEN I can see the details and amount of money gathered from the donation program
 DonationProgram.joinToEWallet = (programId, result) => {
-  sql.query(`SELECT * FROM donation_programs JOIN ewallets ON donation_programs.wallet_id = ewallets.wallet_id WHERE donation_programs.program_id = ${programId}`, (err, res) => {
+  sql.query(`SELECT * FROM donation_programs
+    JOIN ewallets
+    ON donation_programs.wallet_id = ewallets.wallet_id
+    WHERE donation_programs.program_id = ${programId}`, (err, res) => {
     if (err) {
       console.log(`Error: ${err}`);
       result(err, null);

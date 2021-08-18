@@ -45,7 +45,11 @@ const walletControllers = {
       } else {
         let balance = data.balance;
         const user_id = data.user_id
-
+        
+        // REQUIREMENT 8
+        // GIVEN I am a Donor
+        // WHEN I visit my e-wallet menu
+        // THEN I can top-up balance to my e-wallet
         if (type === 'increase') 
           balance += req.body.amount;
         else if (type === 'decrease') {

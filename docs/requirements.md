@@ -64,10 +64,9 @@ ___
     sql.query("INSERT INTO ewallets SET ?", newEWallet, (err, res) => {
     ```
 
-    admin notification creation at [notif.model.js](../models/notif.model.js)
+    admin notification creation at [users.model.js](../models/users.model.js)
     ```js
-    // send notif if user is a fundraiser
-    sql.query("INSERT INTO notifications SET ?", notification, (err, res) => {
+    Notification.newFundraiserAccount(res.insertId)
     ```
 
 3. GIVEN I am an Admin \
@@ -171,6 +170,11 @@ ___
     WHEN I create new donation program \
     THEN The system should notify the admin that a new donation program is created
 
+    admin notification creation at [donation_programs.model.js](../models/donation_programs.model.js)
+    ```js
+    Notification.newDonationProgram(res.insertId);
+    ```
+
 10. GIVEN I am an Admin \
     WHEN There is a new donation program created \
     THEN I can choose to verify or reject the program
@@ -190,9 +194,23 @@ ___
     WHEN I visit my dashboard \
     THEN I can see list of my donation programs
 
+    Get list of donation programs with API call at
+    ```
+    GET /api/donation_program/getOwnDonationProgramList HTTP/1.1
+    Cookie: auth_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjI5MjcxMjQyLCJleHAiOjE2Mjk4NzYwNDJ9.TygR--dzget_GUnIC08waEKVvjLUsSXAcB5qpK_ElX8
+    ```
+    note: must be logged in as a fundraiser
+
 12. GIVEN I am a Fundraiser \
     WHEN I click any of my donation programs \
     THEN I can see the details and amount of money gathered from the donation program
+
+    Get donation program details with API call at
+    ```
+    GET /api/donation_program/getDonationProgramInfo/1 HTTP/1.1
+    Cookie: auth_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjI5MjcxMjQyLCJleHAiOjE2Mjk4NzYwNDJ9.TygR--dzget_GUnIC08waEKVvjLUsSXAcB5qpK_ElX8
+    ```
+    note: must be logged in as a fundraiser
 
 13. GIVEN I am a Fundraiser \
     WHEN I click withdraw on my donation program \
