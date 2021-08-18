@@ -91,6 +91,7 @@ ___
 
     List verified donation programs at
     ```
+    GET /api/donation_program/getVerifiedDonationProgram
     ```
 
 5. GIVEN I am a Donor \
@@ -99,7 +100,9 @@ ___
 
     Get donation program details at
     ```
+    GET /api/donation_program/getDonationProgramInfo/1
     ```
+    note: 1 is the program_id of the donation program
 
 6. GIVEN I am a Donor \
     WHEN I click donate on a verified donation program \
