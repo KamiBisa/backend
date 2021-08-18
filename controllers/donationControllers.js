@@ -1,6 +1,7 @@
 const DonationProgram = require('../models/donation_programs.model');
 const Donation = require('./../models/donations.model');
 const EWallet = require('./../models/ewallets.model');
+const responseBuilder = require('../utils/responseBuilder')
 
 const donationControllers = {
   donate: (req, res) => {
@@ -72,6 +73,10 @@ const donationControllers = {
         }
       }
     })
+  },
+
+  pastDonations: (req, res) => {
+    Donation.findByUserId(req.user.user_id, responseBuilder.json(res, "failed to get past donations"))
   }
 };
 

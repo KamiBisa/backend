@@ -19,20 +19,17 @@ Donation.create = (newDonation, result) => {
   })
 }
 
-Donation.findByUserId = (userId, result) => {
-  sql.query(`SELECT * FROM donations WHERE user_id = ${userId}`, (err, res) => {
+Donation.findByUserId = (user_id, result) => {
+  sql.query(`SELECT * FROM donations 
+    WHERE user_id = ${user_id}
+    ORDER BY timestamp DESC`, (err, res) => {
     if (err) {
       console.log(`Error: ${err.message}`);
       result(err, null);
       return;
     }
 
-    if (res.length) {
-      result(null, res);
-      return;
-    }
-
-    result({kind: "not_found"}, null);
+    result(null, res);
   })
 }
 

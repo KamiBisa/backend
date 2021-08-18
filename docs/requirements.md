@@ -78,12 +78,15 @@ ___
     ```
     GET /api/notification/view/fundraisers HTTP/1.1
     ```
+    note: must be logged in as an admin
 
     Update verification status at
     ```
     GET /api/verification/getUpdateFundraiser/3/verify
     ```
-    note: 3 is the user_id of the fundraiser
+    note:
+    - 3 is the user_id of the fundraiser
+    - must be logged in as an admin
 
 4. GIVEN I am a Donor \
     WHEN I visit the homepage \
@@ -93,6 +96,7 @@ ___
     ```
     GET /api/donation_program/getVerifiedDonationProgram
     ```
+    note: must be logged in as a donor
 
 5. GIVEN I am a Donor \
     WHEN I click the verified donation program \
@@ -102,15 +106,48 @@ ___
     ```
     GET /api/donation_program/getDonationProgramInfo/1
     ```
-    note: 1 is the program_id of the donation program
+    note:
+    - 1 is the program_id of the donation program
+    - note: must be logged in as a donor
 
 6. GIVEN I am a Donor \
     WHEN I click donate on a verified donation program \
     THEN I can donate money using the balance on my e-wallet
 
+    Send donation API call at
+    ```
+    POST /api/donation/postDonate/1 HTTP/1.1
+    Content-Type: application/json
+    Accept: */*
+    Cookie: auth_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaWF0IjoxNjI5MjYzMDUxLCJleHAiOjE2Mjk4Njc4NTF9.NzdTOzfRkH2i9CRpgDkjOxCSp3z-0r6OJYxhejfcN_0
+
+    {
+        "amount": 10
+    }
+    ```
+    note:
+    - 1 is the program_id of the donation program
+    - must be logged in as a donor
+
 7. GIVEN I am a Donor \
     WHEN I visit my dashboard \
     THEN I can see list of my past donations
+
+    View list of past donations of a donor with API call at
+    ```
+    GET /api/donation/getPastDonations HTTP/1.1
+    Cookie: auth_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaWF0IjoxNjI5MjYzMDUxLCJleHAiOjE2Mjk4Njc4NTF9.NzdTOzfRkH2i9CRpgDkjOxCSp3z-0r6OJYxhejfcN_0
+    ```
+    note: must be logged in as a donor
+
+    or
+
+    View list of past donations of a donor with user info with API call at
+    ```
+    GET /api/authentication/getUserInfo HTTP/1.1
+    Cookie: auth_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaWF0IjoxNjI5MjYzMDUxLCJleHAiOjE2Mjk4Njc4NTF9.NzdTOzfRkH2i9CRpgDkjOxCSp3z-0r6OJYxhejfcN_0
+    ```
+    note: must be logged in as a donor
 
 8. GIVEN I am a Donor \
     WHEN I visit my e-wallet menu \
