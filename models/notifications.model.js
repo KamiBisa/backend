@@ -61,4 +61,25 @@ Notification.view = (filter, result) => {
     })
 }
 
+Notification.delete = (verification) => {
+    let whereClause = " "
+    switch (true) {
+        case verification.user_id != undefined:
+            whereClause += "WHERE user_id = " + verification.user_id
+            break;
+        case verification.program_id != undefined:
+            whereClause += "WHERE program_id = " + verification.program_id
+            break;
+        case verification.withdrawal_id:
+            whereClause += "WHERE withdrawal_id = " + verification.withdrawal_id
+            break;
+    }
+
+    sql.query("DELETE FROM notifications" + whereClause + " LIMIT 1", (err) => {
+        if (err) {
+            console.log(`Notifications delete error : ${err}`);
+        }
+    })
+}
+
 module.exports = Notification
