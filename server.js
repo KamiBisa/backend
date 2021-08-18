@@ -31,5 +31,6 @@ app.use('/api/notification', require('./routes/notification.route'));
 app.use('/api/donation_program', require('./routes/donationProgram.route'));
 app.use('/api/donation', require('./routes/donation.route'));
 app.use('/api/verification', require('./routes/verification.route'))
+app.use('/api/withdrawal', require('./routes/withdrawal.route'));
 
 module.exports = app;
