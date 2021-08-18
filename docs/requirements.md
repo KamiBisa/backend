@@ -81,7 +81,11 @@ ___
 
     Update verification status at
     ```
-    GET /api/verification/getUpdateFundraiser/3/verify
+    GET /api/verification/getVerifyFundraiser/3/verify
+    ```
+    or
+    ```
+    GET /api/verification/getVerifyFundraiser/3/reject
     ```
     note:
     - 3 is the user_id of the fundraiser
@@ -188,6 +192,10 @@ ___
     ```
     GET /api/verification/getUpdatePrograms/1/verify
     ```
+    or
+    ```
+    GET /api/verification/getVerifyDonationProgram/1/reject
+    ```
     note: 1 is the program_id of the donation program
 
 11. GIVEN I am a Fundraiser \
@@ -227,7 +235,11 @@ ___
 
     Update verification status at
     ```
-    GET /api/verification/getUpdateWithdrawal/1/verify
+    GET /api/verification/getVerifyWithdrawal/1/verify
+    ```
+    or
+    ```
+    GET /api/verification/getVerifyWithdrawal/1/reject
     ```
     note: 1 is the withdrawal_id of the withdrawal
 

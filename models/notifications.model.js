@@ -61,17 +61,17 @@ Notification.view = (filter, result) => {
     })
 }
 
-Notification.delete = (verification) => {
+Notification.delete = (notification) => {
     let whereClause = " "
     switch (true) {
-        case verification.user_id != undefined:
-            whereClause += "WHERE user_id = " + verification.user_id
+        case notification.user_id != undefined:
+            whereClause += "WHERE user_id = " + notification.user_id
             break;
-        case verification.program_id != undefined:
-            whereClause += "WHERE program_id = " + verification.program_id
+        case notification.program_id != undefined:
+            whereClause += "WHERE program_id = " + notification.program_id
             break;
-        case verification.withdrawal_id:
-            whereClause += "WHERE withdrawal_id = " + verification.withdrawal_id
+        case notification.withdrawal_id:
+            whereClause += "WHERE withdrawal_id = " + notification.withdrawal_id
             break;
     }
 

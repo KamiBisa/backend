@@ -25,11 +25,6 @@ router.route('/getDonationProgramInfo/:id').get(
     isAuthenticated,
     donationProgramControllers.donationProgramInfo
 );
-router.route('/postSetDonationProgramStatus/:id/:status').post(
-    isAuthenticated,
-    authorizeRoles('admin'),
-    donationProgramControllers.setDonationProgramStatus
-);
 // REQUIREMENT 4
 // GIVEN I am a Donor
 // WHEN I visit the homepage

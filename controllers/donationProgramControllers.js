@@ -1,5 +1,6 @@
 const DonationProgram = require('./../models/donation_programs.model');
 const EWallet = require('./../models/ewallets.model');
+const Notification = require('../models/notifications.model')
 const cloudinary = require('cloudinary');
 
 const donationProgramControllers = {
@@ -93,9 +94,15 @@ const donationProgramControllers = {
     })
   },
   setDonationProgramStatus: (req, res) => {
-    const {id, status} = req.params;
+    const {program_id, status} = req.params;
+    let newStatus
+    if (status === 'verify') {
+      newStatus = true
+    } else if (status === 'reject') {
+      newStatus = false
+    }
 
-    DonationProgram.findById(id, (err, data) => {
+    DonationProgram.findById(program_id, (err, data) => {
       if (err) {
         if (err.kind === 'not_found') {
           return res.status(404).json({
@@ -109,11 +116,8 @@ const donationProgramControllers = {
           })
         }
       } else {
-        let newStatus;
-        if (status === "true") newStatus = 1;
-        else newStatus = null;
 
-        DonationProgram.updateById(id, {
+        DonationProgram.updateById(program_id, {
           is_verified: newStatus
         }, (err, data) => {
           if (err) {
@@ -122,6 +126,11 @@ const donationProgramControllers = {
               message: err.message
             })
           }
+
+          notifToDelete = new Notification({
+            program_id: program_id,
+          })
+          Notification.delete(notifToDelete)
 
           return res.status(200).json({
             success: true,

@@ -1,6 +1,7 @@
 const Withdrawal = require('./../models/withdrawals.model');
 const EWallet = require('./../models/ewallets.model');
 const DonationProgram = require('./../models/donation_programs.model');
+const Notification = require('../models/notifications.model')
 
 const withdrawalControllers = {
   withdrawDonationProgram: (req, res) => {
@@ -61,8 +62,13 @@ const withdrawalControllers = {
     })
   },
   verifyWithdraw: (req, res) => {
-    const {withdrawalId, status} = req.params;
-    let newStatus = (status === 'true') ? 1 : null;
+    const {withdrawal_id, status} = req.params;
+    let newStatus
+    if (status === 'verify') {
+      newStatus = true
+    } else if (status === 'reject') {
+      newStatus = false
+    }
 
     if (newStatus === null) {
       return res.status(400).json({
@@ -71,12 +77,12 @@ const withdrawalControllers = {
       })
     }
 
-    Withdrawal.findById(withdrawalId, (err, data) => {
+    Withdrawal.findById(withdrawal_id, (err, data) => {
       if (err) {
         if (err.kind === 'not_found') {
           return res.status(404).json({
             success: false,
-            message: `Withdrawal with id ${withdrawalId} not found.`
+            message: `Withdrawal with id ${withdrawal_id} not found.`
           })
         } else {
           return res.status(500).json({
@@ -96,7 +102,7 @@ const withdrawalControllers = {
           } else {
             const {wallet_id, user_id} = data;
 
-            Withdrawal.updateById(withdrawalId, {
+            Withdrawal.updateById(withdrawal_id, {
               is_verified: newStatus
             }, (err, data) => {
               if (err) {
@@ -118,6 +124,11 @@ const withdrawalControllers = {
               } else {
                 const {wallet_id} = data;
                 EWallet.increaseBalance(wallet_id, amount);
+
+                notifToDelete = new Notification({
+                  withdrawal_id: withdrawal_id,
+                })
+                Notification.delete(notifToDelete)
 
                 return res.status(200).json({
                   success: true,

@@ -1,5 +1,6 @@
 const User = require('./../models/users.model');
 const Donation = require('./../models/donations.model');
+const Notification = require('../models/notifications.model')
 const bcrypt = require('bcrypt');
 const sendToken = require('./../utils/sendToken');
 const cloudinary = require('cloudinary');
@@ -95,19 +96,22 @@ const authControllers = {
     })
   },
   verifyFundraiser: (req, res) => {
-    const {id, verify} = req.params;
-    let newStatus;
-    if (verify === 'true') newStatus = 1;
-    else newStatus = null;
+    const {user_id, status} = req.params;
+    let newStatus
+    if (status === 'verify') {
+      newStatus = true
+    } else if (status === 'reject') {
+      newStatus = false
+    }
 
-    User.findById(id, (err, data) => {
+    User.findById(user_id, (err, data) => {
       if (err) {
         return res.status(500).json({
           success: false,
-          message: `User with id ${id} not found.`
+          message: `User with id ${user_id} not found.`
         })
       } else {
-        User.updateById(id, {
+        User.updateById(user_id, {
           username: data.username,
           password: data.password,
           role: data.role,
@@ -115,12 +119,17 @@ const authControllers = {
         }, (err, data) => {
           return res.status(200).json({
             success: true,
-            message: `Fundraiser status with id ${id} has been changed.`,
+            message: `Fundraiser status with id ${user_id} has been changed.`,
             user: data
           })
         })
       }
     });
+    
+    notifToDelete = new Notification({
+      user_id: user_id,
+    })
+    Notification.delete(notifToDelete)
   },
   userInfo: (req, res) => {
     const id = req.user.user_id;
