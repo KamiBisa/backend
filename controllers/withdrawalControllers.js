@@ -1,11 +1,11 @@
 const Withdrawal = require('./../models/withdrawals.model');
 const EWallet = require('./../models/ewallets.model');
 const DonationProgram = require('./../models/donation_programs.model');
-const Notification = require('../models/notifications.model')
+const Notification = require('../models/notifications.model');
 
 const withdrawalControllers = {
   withdrawDonationProgram: (req, res) => {
-    const {programId: program_id} = req.params;
+    const {program_id} = req.params;
     const {amount} = req.body;
 
     if (!amount) {
@@ -72,74 +72,103 @@ const withdrawalControllers = {
       newStatus = false
     }
 
-    if (newStatus === null) {
-      return res.status(400).json({
-        success: false,
-        message: 'Withdrawal application has been rejected.'
-      })
-    }
-
     Withdrawal.findById(withdrawal_id, (err, data) => {
       if (err) {
-        if (err.kind === 'not_found') {
-          return res.status(404).json({
+        return res.status(500).json({
+          success: false,
+          message: err.message
+        })
+      } else {
+        if (data.is_done !== null) {
+          return res.status(400).json({
             success: false,
-            message: `Withdrawal with id ${withdrawal_id} not found.`
+            message: 'Status changed before.'
           })
         } else {
-          return res.status(500).json({
-            success: false,
-            message: err.message
-          })
-        }
-      } else {
-        const {program_id, amount} = data;
-
-        DonationProgram.findById(program_id, (err, data) => {
-          if (err) {
-            return res.status(400).json({
-              success: false,
-              message: err.message
-            })
-          } else {
-            const {wallet_id, user_id} = data;
-
+          if (newStatus === false) {
             Withdrawal.updateById(withdrawal_id, {
-              is_verified: newStatus
+              is_verified: newStatus,
+              is_done: 1
             }, (err, data) => {
               if (err) {
-                return res.status(400).json({
-                  success: false,
-                  message: err.message
-                })
-              }
-            })
-
-            EWallet.deductBalance(wallet_id, amount);
-
-            EWallet.findByUserId(user_id, (err, data) => {
-              if (err) {
-                return res.status(400).json({
+                return res.status(500).json({
                   success: false,
                   message: err.message
                 })
               } else {
-                const {wallet_id} = data;
-                EWallet.increaseBalance(wallet_id, amount);
-
-                notifToDelete = new Notification({
-                  withdrawal_id: withdrawal_id,
+                return res.status(400).json({
+                  success: false,
+                  message: 'Withdrawal application has been rejected.'
                 })
-                Notification.delete(notifToDelete)
-
-                return res.status(200).json({
-                  success: true,
-                  message: 'Withdrawal has been approved.'
+              }
+            })      
+          } else if (newStatus === true) {
+            Withdrawal.findById(withdrawal_id, (err, data) => {
+              if (err) {
+                if (err.kind === 'not_found') {
+                  return res.status(404).json({
+                    success: false,
+                    message: `Withdrawal with id ${withdrawal_id} not found.`
+                  })
+                } else {
+                  return res.status(500).json({
+                    success: false,
+                    message: err.message
+                  })
+                }
+              } else {
+                const {program_id, amount} = data;
+      
+                DonationProgram.findById(program_id, (err, data) => {
+                  if (err) {
+                    return res.status(400).json({
+                      success: false,
+                      message: err.message
+                    })
+                  } else {
+                    const {wallet_id, user_id} = data;
+      
+                    Withdrawal.updateById(withdrawal_id, {
+                      is_verified: newStatus,
+                      is_done: 1
+                    }, (err, data) => {
+                      if (err) {
+                        return res.status(400).json({
+                          success: false,
+                          message: err.message
+                        })
+                      }
+                    })
+      
+                    EWallet.deductBalance(wallet_id, amount);
+      
+                    EWallet.findByUserId(user_id, (err, data) => {
+                      if (err) {
+                        return res.status(400).json({
+                          success: false,
+                          message: err.message
+                        })
+                      } else {
+                        const {wallet_id} = data;
+                        EWallet.increaseBalance(wallet_id, amount);
+      
+                        notifToDelete = new Notification({
+                          withdrawal_id: withdrawal_id,
+                        })
+                        Notification.delete(notifToDelete)
+      
+                        return res.status(200).json({
+                          success: true,
+                          message: 'Withdrawal has been approved.'
+                        })
+                      }
+                    })
+                  }
                 })
               }
             })
           }
-        })
+        }
       }
     })
   },

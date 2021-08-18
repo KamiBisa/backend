@@ -37,7 +37,7 @@ Withdrawal.findById = (withdrawalId, result) => {
 }
 
 Withdrawal.updateById = (id, withdrawal, result) => {
-  sql.query("UPDATE withdrawals SET is_verified = ? WHERE withdrawal_id = ?", [withdrawal.is_verified, id], (err, res) => {
+  sql.query("UPDATE withdrawals SET is_verified = ?, is_done = ? WHERE withdrawal_id = ?", [withdrawal.is_verified, withdrawal.is_done, id], (err, res) => {
     if (err) {
       console.log(`Error: ${err}`);
       result(null, err);
