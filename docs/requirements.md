@@ -1,7 +1,7 @@
-### Database operations
+### Requirements & API Calls
 
 Here are the list of requirements and the way we fulfill them,
-with focus on the database operations.
+with focus on the API calls.
 
 ___
 
@@ -21,21 +21,6 @@ ___
         "role": "donor"
     }
     ```
-    
-    triggers user creation query at [users.model.js](../models/users.model.js)
-    ```js
-    sql.query("INSERT INTO users SET ?", newUser, (err, res) => {
-    ```
-    immediately verified
-    ```js
-    if (newUser.role === 'donor')
-        newUser.is_verified = true
-    ```
-
-    triggers ewallet creation query at [ewallets.model.js](../models/ewallets.model.js)
-    ```js
-    sql.query("INSERT INTO ewallets SET ?", newEWallet, (err, res) => {
-    ```
 
 2. GIVEN I am an unregistered user \
     WHEN I register as Fundraiser \
@@ -51,22 +36,6 @@ ___
         "password": "password",
         "role": "fundraiser"
     }
-    ```
-
-    user creation query at [users.model.js](../models/users.model.js)
-    ```js
-    sql.query("INSERT INTO users SET ?", newUser, (err, res) => {
-    ```
-    verification status is null (by default)
-
-    ewallet creation query at [ewallets.model.js](../models/ewallets.model.js)
-    ```js
-    sql.query("INSERT INTO ewallets SET ?", newEWallet, (err, res) => {
-    ```
-
-    admin notification creation at [users.model.js](../models/users.model.js)
-    ```js
-    Notification.newFundraiserAccount(res.insertId)
     ```
 
 3. GIVEN I am an Admin \

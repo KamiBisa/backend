@@ -115,6 +115,10 @@ const withdrawalControllers = {
               }
             })
 
+            // REQUIREMENT 15
+            // GIVEN I am a Fundraiser
+            // WHEN My withdrawal is accepted by the admin
+            // THEN withdrawal value will be transferred to my e-wallet
             EWallet.deductBalance(wallet_id, amount);
 
             EWallet.findByUserId(user_id, (err, data) => {
