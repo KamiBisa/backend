@@ -1,33 +1,23 @@
 const Notification = require('../models/notifications.model')
+const responseBuilder = require('../utils/responseBuilder')
+
+const errMsg = "failed to get notifications"
 
 const notifControllers = {
     viewAll: (req, res) => {
-        Notification.view(null, jsonResponse(res))
+        Notification.view(null, responseBuilder.json(res, errMsg))
     },
 
     viewFundraisers: (req, res) => {
-        Notification.view("fundraisers", jsonResponse(res))
+        Notification.view("fundraisers", responseBuilder.json(res, errMsg))
     },
 
     viewPrograms: (req, res) => {
-        Notification.view("programs", jsonResponse(res))
+        Notification.view("programs", responseBuilder.json(res, errMsg))
     },
 
     viewWithdrawals: (req, res) => {
-        Notification.view("withdrawals", jsonResponse(res))
-    }
-}
-
-function jsonResponse(res) {
-    return async(err, data) => {
-        if (err) {
-            res.stats(500).json({
-                success: false,
-                message: "failed to get notifications"
-            })
-        } else {
-            res.json(data)
-        }
+        Notification.view("withdrawals", responseBuilder.json(res, errMsg))
     }
 }
 
