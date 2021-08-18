@@ -81,7 +81,9 @@ ___
 
     Update verification status at
     ```
+    GET /api/verification/getUpdateFundraiser/3/verify
     ```
+    note: 3 is the user_id of the fundraiser
 
 4. GIVEN I am a Donor \
     WHEN I visit the homepage \
@@ -124,6 +126,12 @@ ___
     GET /api/notification/view/programs HTTP/1.1
     ```
 
+    Update verification status at
+    ```
+    GET /api/verification/getUpdatePrograms/1/verify
+    ```
+    note: 1 is the program_id of the donation program
+
 11. GIVEN I am a Fundraiser \
     WHEN I visit my dashboard \
     THEN I can see list of my donation programs
@@ -144,6 +152,12 @@ ___
     ```
     GET /api/notification/view/withdrawals HTTP/1.1
     ```
+
+    Update verification status at
+    ```
+    GET /api/verification/getUpdateWithdrawal/1/verify
+    ```
+    note: 1 is the withdrawal_id of the withdrawal
 
 15. GIVEN I am a Fundraiser \
     WHEN My withdrawal is accepted by the admin \
