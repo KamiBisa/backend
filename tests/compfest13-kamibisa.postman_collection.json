@@ -1,0 +1,668 @@
+{
+	"info": {
+		"_postman_id": "bdc7d01e-f789-4655-a96e-7eb9e6ad996e",
+		"name": "compfest13-kamibisa",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "auth",
+			"item": [
+				{
+					"name": "register",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"host": true
+						}
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"fullname\": \"user 1\",\n    \"username\": \"user1\",\n    \"email\": \"user1@gmail.com\",\n    \"password\": \"user1_\",\n    \"avatar\": \"https://image.flaticon.com/icons/png/512/21/21104.png\",\n    \"role\": \"donor\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/authentication/postRegister",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"authentication",
+								"postRegister"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "login",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": \"asd\",\n    \"password\": \"user1_\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/authentication/postLogin",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"authentication",
+								"postLogin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "logout",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/authentication/getLogout",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"authentication",
+								"getLogout"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "user info",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/authentication/getUserInfo",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"authentication",
+								"getUserInfo"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "ewallet",
+			"item": [
+				{
+					"name": "increase",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"amount\": 5\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/ewallet/postUpdateEWallet/1/increase",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"ewallet",
+								"postUpdateEWallet",
+								"1",
+								"increase"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "decrease",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"amount\": 5\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/ewallet/postUpdateEWallet/1/decrease",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"ewallet",
+								"postUpdateEWallet",
+								"1",
+								"decrease"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "notifications",
+			"item": [
+				{
+					"name": "view all",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/notification/view",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"notification",
+								"view"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "view fundraisers",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/notification/view/fundraisers",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"notification",
+								"view",
+								"fundraisers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "view donation programs",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/notification/view/programs",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"notification",
+								"view",
+								"programs"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "view withdrawals",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/notification/view/withdrawals",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"notification",
+								"view",
+								"withdrawals"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "verification",
+			"item": [
+				{
+					"name": "fundraiser",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/verification/getVerifyFundraiser/1/reject",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"verification",
+								"getVerifyFundraiser",
+								"1",
+								"reject"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "donation program",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/verification/getVerifyDonationProgram/1/verify",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"verification",
+								"getVerifyDonationProgram",
+								"1",
+								"verify"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "withdrawal",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/verification/getVerifyWithdrawal/3/verify",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"verification",
+								"getVerifyWithdrawal",
+								"3",
+								"verify"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "withdrawal reject",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/verification/getVerifyWithdrawal/1/reject",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"verification",
+								"getVerifyWithdrawal",
+								"1",
+								"reject"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "donation program",
+			"item": [
+				{
+					"name": "create new",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"description\": \"lets help this guy get some money\",\n    \"name\": \"donation for some guy\",\n    \"image\": \"asd\",\n    \"goal\": \"500\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/donation_program/postCreateDonationProgram",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"donation_program",
+								"postCreateDonationProgram"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "list all programs",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/donation_program/getVerifiedDonationProgram",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"donation_program",
+								"getVerifiedDonationProgram"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "list programs of a fundraiser",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/donation_program/getOwnDonationProgramList",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"donation_program",
+								"getOwnDonationProgramList"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "program details",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/donation_program/getDonationProgramInfo/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"donation_program",
+								"getDonationProgramInfo",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "donation",
+			"item": [
+				{
+					"name": "donation",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"amount\": 15\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/donation/postDonate/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"donation",
+								"postDonate",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get past donations",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/donation/getPastDonations",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"donation",
+								"getPastDonations"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get user info (includes past donations)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/authentication/getUserInfo",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"authentication",
+								"getUserInfo"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "withdrawal",
+			"item": [
+				{
+					"name": "withdrawal request",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"amount\": 10\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/withdrawal/postWithdrawDonationProgram/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"withdrawal",
+								"postWithdrawDonationProgram",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get all withdrawals",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"amount\": 10\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/withdrawal/getAllWithdrawals",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"withdrawal",
+								"getAllWithdrawals"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
