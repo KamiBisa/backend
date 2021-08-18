@@ -5,7 +5,7 @@ const Notification = require('../models/notifications.model')
 
 const withdrawalControllers = {
   withdrawDonationProgram: (req, res) => {
-    const {programId} = req.params;
+    const {programId: program_id} = req.params;
     const {amount} = req.body;
 
     if (!amount) {
@@ -22,7 +22,7 @@ const withdrawalControllers = {
       })
     }
 
-    DonationProgram.findById(programId, (err, data) => {
+    DonationProgram.findById(program_id, (err, data) => {
       if (err) {
         return res.status(500).json({
           success: false,
@@ -38,7 +38,7 @@ const withdrawalControllers = {
             })
           } else {
             const newWithdrawal = {
-              program_id: programId,
+              program_id: program_id,
               amount,
               timestamp: new Date(Date.now())
             };
@@ -50,6 +50,8 @@ const withdrawalControllers = {
                   message: err.message
                 })
               }
+
+              Notification.withdrawFunds(data.withdrawal_id)
 
               return res.status(200).json({
                 success: true,

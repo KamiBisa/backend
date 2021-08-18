@@ -27,8 +27,8 @@ router.route('/getVerifyDonationProgram/:program_id/:status').get(
 // WHEN There is a new withdrawal from donation program
 // THEN I can choose to reject or accept the withdrawal
 router.route('/getVerifyWithdrawal/:withdrawal_id/:status').get(
-    // isAuthenticated,
-    // authorizeRoles('admin'),
+    isAuthenticated,
+    authorizeRoles('admin'),
     withdrawalControllers.verifyWithdraw
 )
 

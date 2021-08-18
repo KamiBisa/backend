@@ -224,6 +224,18 @@ ___
     WHEN I click withdraw on my donation program \
     THEN I can choose how much money to withdraw and the system will notify the admin that there is a new withdrawal from your program
 
+    Request a withdrawal with API call at
+    ```
+    POST /api/withdrawal/postWithdrawDonationProgram/1 HTTP/1.1
+    Content-Type: application/json
+    Cookie: auth_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjI5MjcxMjQyLCJleHAiOjE2Mjk4NzYwNDJ9.TygR--dzget_GUnIC08waEKVvjLUsSXAcB5qpK_ElX8
+    
+    {
+        "amount": 10
+    }
+    ```
+    note: must be logged in as a fundraiser
+
 14. GIVEN I am an Admin \
     WHEN There is a new withdrawal from donation program \
     THEN I can choose to reject or accept the withdrawal
@@ -247,3 +259,9 @@ ___
     WHEN My withdrawal is accepted by the admin \
     THEN withdrawal value will be transferred to my e-wallet
 
+    Verify withdrawal with API call at
+    ```
+    GET /api/verification/getVerifyWithdrawal/3/verify HTTP/1.1
+    Cookie: auth_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjI5MjcxMjQyLCJleHAiOjE2Mjk4NzYwNDJ9.TygR--dzget_GUnIC08waEKVvjLUsSXAcB5qpK_ElX8
+    ```
+    note: must be logged in as an admin
