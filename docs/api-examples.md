@@ -47,8 +47,11 @@ Accept: */*
 Content-Length: 69
 
 {
-    "username": "qwe",
-    "password": "asd",
+    "fullname": "user 1",
+    "username": "user1",
+    "email": "user1@gmail.com",
+    "password": "user1_",
+    "avatar": "https://image.flaticon.com/icons/png/512/21/21104.png",
     "role": "donor"
 }
 ```
