@@ -66,7 +66,7 @@ const createDonationProgramTable = () => {
       wallet_id INT NOT NULL,
       name VARCHAR(100) NOT NULL,
       description VARCHAR(1000) NOT NULL,
-      image_url VARCHAR(100) NOT NULL,
+      image_url VARCHAR(1000) NOT NULL,
       is_verified BOOLEAN DEFAULT NULL,
       goal INT NOT NULL,
       FOREIGN KEY(wallet_id) REFERENCES ewallets(wallet_id),
