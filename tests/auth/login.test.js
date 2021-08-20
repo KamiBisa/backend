@@ -5,10 +5,17 @@ const app = require('../../server')
 
 describe('login', () => {
     it("login as freshly registered donor", done => {
-        const donor = {"username":"donor@login", "password":"asd", "role":"donor"}
+        const donor = {
+            "fullname": "andi donor login",
+            "username": "andilogin",
+            "email": "andi1@gmail.com",
+            "password": "andi",
+            "avatar": "https://image.flaticon.com/icons/png/512/21/21104.png",
+            "role": "donor"
+        }
 
         request(app)
-            .post("/api/postRegister")
+            .post("/api/authentication/postRegister")
             .send(donor)
             .set('Content-Type', 'application/json')
             .set('Accept', 'application/json')
@@ -21,7 +28,7 @@ describe('login', () => {
 
                 delete donor.role
                 request(app)
-                    .post("/api/postLogin")
+                    .post("/api/authentication/postLogin")
                     .send(donor)
                     .set('Content-Type', 'application/json')
                     .set('Accept', 'application/json')
@@ -36,10 +43,17 @@ describe('login', () => {
     })
 
     it("login as freshly registered fundraiser", done => {
-        const fundraiser = {"username":"fund@login", "password":"asd", "role":"fundraiser"}
+        const fundraiser = {
+            "fullname": "budi fundraiser login",
+            "username": "budilogin",
+            "email": "budi1@gmail.com",
+            "password": "budi",
+            "avatar": "https://image.flaticon.com/icons/png/512/21/21104.png",
+            "role": "fundraiser"
+        }
 
         request(app)
-            .post("/api/postRegister")
+            .post("/api/authentication/postRegister")
             .send(fundraiser)
             .set('Content-Type', 'application/json')
             .set('Accept', 'application/json')
@@ -51,7 +65,7 @@ describe('login', () => {
                 }
 
                 request(app)
-                    .post("/api/postLogin")
+                    .post("/api/authentication/postLogin")
                     .send(fundraiser)
                     .set('Content-Type', 'application/json')
                     .set('Accept', 'application/json')
