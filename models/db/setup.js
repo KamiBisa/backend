@@ -82,12 +82,7 @@ const createWithdrawalTable = () => {
       program_id INT NOT NULL,
       is_verified BOOLEAN DEFAULT NULL,
       amount INT NOT NULL,
-<<<<<<< HEAD
-      is_done BOOLEAN DEFAULT NULL,
-      timestamp DATE NOT NULL,
-=======
       timestamp TIMESTAMP NOT NULL,
->>>>>>> 739b346d9deefbff2774ce57cab70a9a48feacd2
       FOREIGN KEY(program_id) REFERENCES donation_programs(program_id)
     )
   `)
