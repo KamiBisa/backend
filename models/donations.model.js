@@ -33,4 +33,15 @@ Donation.findByUserId = (user_id, result) => {
   })
 }
 
+Donation.findByProgramId = (program_id, result) => {
+  sql.query(`SELECT * FROM donations WHERE program_id = ${program_id}`, (err, res) => {
+    if (err) {
+      result(err, null);
+      return;
+    }
+
+    result(null, res);
+  })
+}
+
 module.exports = Donation;

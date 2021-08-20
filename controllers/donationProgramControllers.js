@@ -1,6 +1,7 @@
 const DonationProgram = require('./../models/donation_programs.model');
 const EWallet = require('./../models/ewallets.model');
 const Notification = require('../models/notifications.model')
+const Donation = require('./../models/donations.model');
 const cloudinary = require('cloudinary');
 
 const donationProgramControllers = {
@@ -148,17 +149,36 @@ const donationProgramControllers = {
             success: false,
             message: 'There\'s no verified donation program recently.'
           })
+        } else {
+          return res.status(500).json({
+            success: false,
+            message: err.message
+          })
         }
-        return res.status(500).json({
-          success: false,
-          message: err.message
-        })
+      } else {
+        const programId = [];
+        data.map(d => (
+          programId.push(d.program_id)
+        ))
+        
+        const newData = data;
+        for (let i = 0; i < programId.length; i++) {
+          EWallet.findById(data[i].wallet_id, (err, walletData) => {
+            newData[i].balance = walletData.balance;
+          });
+
+          Donation.findByProgramId(programId[i], (err, donationData) => {
+            newData[i].donatedUser = donationData;
+            
+            if (i === programId.length - 1) {
+              return res.status(200).json({
+                success: true,
+                donation_program: newData
+              })
+            }
+          })
+        }
       }
-      
-      return res.status(200).json({ 
-        success: true,
-        donation_program: data
-      })
     })
   }
 }
