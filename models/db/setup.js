@@ -66,7 +66,7 @@ const createDonationProgramTable = () => {
       wallet_id INT NOT NULL,
       name VARCHAR(100) NOT NULL,
       description VARCHAR(1000) NOT NULL,
-      image_url VARCHAR(100) NOT NULL,
+      image_url VARCHAR(1000) NOT NULL,
       is_verified BOOLEAN DEFAULT NULL,
       goal INT NOT NULL,
       FOREIGN KEY(wallet_id) REFERENCES ewallets(wallet_id),
@@ -82,12 +82,7 @@ const createWithdrawalTable = () => {
       program_id INT NOT NULL,
       is_verified BOOLEAN DEFAULT NULL,
       amount INT NOT NULL,
-<<<<<<< HEAD
-      is_done BOOLEAN DEFAULT NULL,
-      timestamp DATE NOT NULL,
-=======
       timestamp TIMESTAMP NOT NULL,
->>>>>>> 739b346d9deefbff2774ce57cab70a9a48feacd2
       FOREIGN KEY(program_id) REFERENCES donation_programs(program_id)
     )
   `)
