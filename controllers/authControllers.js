@@ -7,7 +7,7 @@ const cloudinary = require('cloudinary');
 
 const authControllers = {
   register: (req, res) => {
-    const {fullname, email, avatar, username, password, role} = req.body;
+    const {fullname, email, username, password, role} = req.body;
 
     if (!username || !password || !role || !fullname || !email) {
       return res.status(400).json({
@@ -20,18 +20,18 @@ const authControllers = {
       if (err) {
         if (err.kind === 'not_found') {
           const hash_password = await bcrypt.hash(password, 12);
-          const imageResult = await cloudinary.v2.uploader.upload(avatar, {
-            folder: 'compfest/user',
-            width: '200',
-            crop: 'scale'
-          })
+          // const imageResult = await cloudinary.v2.uploader.upload(avatar, {
+          //   folder: 'compfest/user',
+          //   width: '200',
+          //   crop: 'scale'
+          // })
 
           const user = new User({
             fullname,
             email,
             username,
             password: hash_password,
-            avatar: imageResult.secure_url,
+            avatar: "https://th.bing.com/th/id/R.6b0022312d41080436c52da571d5c697?rik=ejx13G9ZroRrcg&riu=http%3a%2f%2fpluspng.com%2fimg-png%2fuser-png-icon-young-user-icon-2400.png&ehk=NNF6zZUBr0n5i%2fx0Bh3AMRDRDrzslPXB0ANabkkPyv0%3d&risl=&pid=ImgRaw&r=0",
             role
           });
 
