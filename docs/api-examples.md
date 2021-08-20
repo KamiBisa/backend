@@ -429,10 +429,48 @@ Keep-Alive: timeout=5
 
 Request
 ```
+POST /api/donation_program/postCreateDonationProgram HTTP/1.1
+Content-Type: application/json
+Accept: */*
+Host: localhost:8080
+Accept-Encoding: gzip, deflate, br
+Connection: keep-alive
+Content-Length: 184
+Cookie: auth_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjI5NDY5MDUzLCJleHAiOjE2MzAwNzM4NTN9.WDjgXXlL_pInaRvKaOcaTl2S6zNtxGtqx_qAnsik_Ow
+
+{
+    "description": "lets help this guy get some money",
+    "name": "donation for some guy",
+    "image": "https://image.flaticon.com/icons/png/512/21/21104.png",
+    "goal": "500"
+}
 ```
 
 Response
 ```
+HTTP/1.1 200 OK
+X-Powered-By: Express
+Access-Control-Allow-Origin: *
+Content-Type: application/json; charset=utf-8
+Content-Length: 318
+ETag: W/"13e-FRfd8Fmd0wH5V+Gmxh4UGnyHj5I"
+Date: Fri, 20 Aug 2021 14:17:53 GMT
+Connection: keep-alive
+Keep-Alive: timeout=5
+
+{
+    "success": true,
+    "donation_program": {
+        "program_id": 1,
+        "user_id": 1,
+        "wallet_id": 2,
+        "name": "donation for some guy",
+        "description": "lets help this guy get some money",
+        "image_url": "https://res.cloudinary.com/dlofpv0uy/image/upload/v1629469073/compfest/donation_program/zgukqqgnuo3nobdzmkpv.png",
+        "is_verified": null,
+        "goal": "500"
+    }
+}
 ```
 
 ### List verified donation programs
