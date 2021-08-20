@@ -24,7 +24,7 @@ const donationProgramControllers = {
         const {wallet_id} = data;
         const imageResult = await cloudinary.v2.uploader.upload(image, {
           folder: 'compfest/donation_program',
-          width: '150',
+          width: '800',
           crop: 'scale'
         });
 
