@@ -12,12 +12,15 @@ ___
 
     User (donor) creation API call at
     ```
-    POST /api/postRegister HTTP/1.1
+    POST /api/authentication/postRegister HTTP/1.1
     Content-Type: application/json
 
     {
-        "username": "username",
-        "password": "password",
+        "fullname": "user 1",
+        "username": "asuser1a",
+        "email": "user1@gmail.com",
+        "password": "user1_",
+        "avatar": "https://image.flaticon.com/icons/png/512/21/21104.png",
         "role": "donor"
     }
     ```
@@ -28,12 +31,15 @@ ___
 
     User (donor) creation API call at
     ```
-    POST /api/postRegister HTTP/1.1
+    POST /api/authentication/postRegister HTTP/1.1
     Content-Type: application/json
 
     {
-        "username": "username",
-        "password": "password",
+        "fullname": "user 1",
+        "username": "asuser1a",
+        "email": "user1@gmail.com",
+        "password": "user1_",
+        "avatar": "https://image.flaticon.com/icons/png/512/21/21104.png",
         "role": "fundraiser"
     }
     ```
