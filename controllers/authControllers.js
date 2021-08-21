@@ -1,6 +1,8 @@
 const User = require('./../models/users.model');
 const Donation = require('./../models/donations.model');
 const Notification = require('../models/notifications.model')
+const EWallet = require('./../models/ewallets.model');
+const DonationProgram = require('./../models/donation_programs.model');
 const bcrypt = require('bcrypt');
 const sendToken = require('./../utils/sendToken');
 const cloudinary = require('cloudinary');
@@ -143,18 +145,40 @@ const authControllers = {
         })
       } else {
         userData.user = data;
-        Donation.findByUserId(userData.user.user_id, (err, data) => {
+
+        EWallet.findByUserId(id, (err, walletData) => {
           if (err) {
-            return res.status(400).json({
+            return res.status(500).json({
               success: false,
               message: err.message
             })
           }
+          userData.user.walletBalance = walletData.balance;
 
-          userData.history = data;
-          return res.status(200).json({
-            success: true,
-            userData
+          Donation.findByUserId(id, (err, donationData) => {
+            if (err) {
+              return res.status(500).json({
+                success: false,
+                message: err.message
+              })
+            }
+            userData.history = donationData;
+
+            for (let i = 0; i < userData.history.length; i++) {
+              DonationProgram.findById(userData.history[i].program_id, (err, donationProgramData) => {
+                if (err) {
+                  return res.status(500).json({
+                    success: false,
+                    message: err.message
+                  })
+                }
+                userData.history[i].programName = donationProgramData.name;
+
+                if (i === userData.history.length - 1) {
+                  return res.json({userData});
+                }
+              })
+            }
           })
         })
       }
