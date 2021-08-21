@@ -1,4 +1,5 @@
 const sql = require('./db/db');
+const User = require('./../models/users.model');
 
 const Notification = function(notification) {
     this.user_id = notification.user_id
@@ -38,20 +39,29 @@ Notification.withdrawFunds = (withdrawal_id) => {
 
 
 Notification.view = (filter, result) => {
-    let whereClause = " "
+    let joinClause = " "
     switch (filter) {
         case "fundraisers":
-            whereClause += "WHERE user_id IS NOT NULL"
+            joinClause += `
+            JOIN users
+            ON users.user_id = notifications.user_id
+            WHERE notifications.user_id IS NOT NULL`
             break;
         case "programs":
-            whereClause += "WHERE program_id IS NOT NULL"
+            joinClause += `
+            JOIN donation_programs
+            ON donation_programs.program_id = notifications.program_id
+            WHERE notifications.program_id IS NOT NULL`
             break;
         case "withdrawals":
-            whereClause += "WHERE withdrawal_id IS NOT NULL"
+            joinClause += `
+            JOIN withdrawals
+            ON withdrawals.withdrawal_id = notifications.withdrawal_id
+            WHERE notifications.withdrawal_id IS NOT NULL`
             break;
     }
 
-    sql.query("SELECT * FROM notifications" + whereClause, (err, res) => {
+    sql.query("SELECT * FROM notifications" + joinClause, (err, res) => {
         if (err) {
             console.log(`Notifications view error : ${err}`);
             result(err, null)

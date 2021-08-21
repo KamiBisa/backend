@@ -8,8 +8,8 @@ router.route('/view').get(
     notifControllers.viewAll
 )
 router.route('/view/fundraisers').get(
-    isAuthenticated,
-    authorizeRoles('admin'),
+    // isAuthenticated,
+    // authorizeRoles('admin'),
     notifControllers.viewFundraisers
 )
 router.route('/view/programs').get(
