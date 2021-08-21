@@ -154,6 +154,7 @@ const authControllers = {
             })
           }
           userData.user.walletBalance = walletData.balance;
+          userData.user.walletId = walletData.wallet_id;
 
           Donation.findByUserId(id, (err, donationData) => {
             if (err) {
