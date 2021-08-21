@@ -2,7 +2,7 @@ const express = require('express');
 const dotenv = require('dotenv');
 const cookieParser = require('cookie-parser');
 const cloudinary = require('cloudinary');
-// const cors = require('cors');
+const cors = require('cors');
 const app = express();
 
 process.on('uncaughtException', err => {
@@ -22,7 +22,7 @@ cloudinary.config({
 })
 
 app.use(express.json({limit: '50mb'}));
-// app.use(cors());
+app.use(cors());
 app.use(cookieParser());
 
 app.use('/api/authentication', require('./routes/auth.route'));
