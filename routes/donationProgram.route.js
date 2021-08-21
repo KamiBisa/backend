@@ -22,7 +22,6 @@ router.route('/getOwnDonationProgramList').get(
 // WHEN I click the verified donation program
 // THEN I can see the details of the verified donation program
 router.route('/getDonationProgramInfo/:id').get(
-    isAuthenticated,
     donationProgramControllers.donationProgramInfo
 );
 // REQUIREMENT 4

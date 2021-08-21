@@ -2,6 +2,7 @@ const DonationProgram = require('./../models/donation_programs.model');
 const EWallet = require('./../models/ewallets.model');
 const Notification = require('../models/notifications.model')
 const Donation = require('./../models/donations.model');
+const User = require('./../models/users.model');
 const cloudinary = require('cloudinary');
 
 const donationProgramControllers = {
@@ -80,7 +81,18 @@ const donationProgramControllers = {
   donationProgramInfo: (req, res) => {
     const {id} = req.params;
 
-    DonationProgram.joinToEWallet(id, (err, data) => {
+    // DonationProgram.joinToEWallet(id, (err, data) => {
+    //   if (err) {
+    //     return res.status(500).json({
+    //       success: false,
+    //       message: err.message
+    //     })
+    //   }
+
+    //   let newData = data;
+
+    // })
+    DonationProgram.findById(id, (err, data) => {
       if (err) {
         return res.status(500).json({
           success: false,
@@ -88,9 +100,40 @@ const donationProgramControllers = {
         })
       }
 
-      return res.status(200).json({
-        success: true,
-        data
+      const newData = data;
+      EWallet.findById(data.wallet_id, (err, walletData) => {
+        if (err) {
+          return res.status(500).json({
+            success: false,
+            message: err.message
+          })
+        }
+        newData.balance = walletData.balance;
+
+        User.findById(data.user_id, (err, userData) => {
+          if (err) {
+            return res.status(500).json({
+              success: false,
+              message: err.message
+            })
+          }
+          newData.fundraiserName = userData.fullname;
+
+          Donation.findByProgramId(data.program_id, (err, donationData) => {
+            if (err) {
+              return res.status(500).json({
+                success: false,
+                message: err.message
+              })
+            }
+            newData.donatedUser = donationData;
+
+            return res.status(200).json({
+              success: true,
+              donation_program: newData
+            })
+          })
+        })
       })
     })
   },
@@ -166,6 +209,10 @@ const donationProgramControllers = {
           EWallet.findById(data[i].wallet_id, (err, walletData) => {
             newData[i].balance = walletData.balance;
           });
+
+          User.findById(data[i].user_id, (err, userData) => {
+            newData[i].fundraiserName = userData.fullname;
+          })
 
           Donation.findByProgramId(programId[i], (err, donationData) => {
             newData[i].donatedUser = donationData;
