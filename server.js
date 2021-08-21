@@ -22,7 +22,7 @@ cloudinary.config({
 })
 
 app.use(express.json({limit: '50mb'}));
-app.use(cors());
+app.use(cors({credentials: true, origin: '*'}));
 app.use(cookieParser());
 
 app.use('/api/authentication', require('./routes/auth.route'));
