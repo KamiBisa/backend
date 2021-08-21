@@ -157,6 +157,15 @@ const authControllers = {
 
           Donation.findByUserId(id, (err, donationData) => {
             if (err) {
+              if (err.kind === 'not_found') {
+                return res.status(200).json({
+                  success: true,
+                  userData: {
+                    ...userData,
+                    history: []
+                  }
+                })
+              }
               return res.status(500).json({
                 success: false,
                 message: err.message
@@ -175,7 +184,10 @@ const authControllers = {
                 userData.history[i].programName = donationProgramData.name;
 
                 if (i === userData.history.length - 1) {
-                  return res.json({userData});
+                  return res.status(200).json({
+                    success: true,
+                    userData
+                  });
                 }
               })
             }

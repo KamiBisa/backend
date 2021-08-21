@@ -28,8 +28,13 @@ Donation.findByUserId = (user_id, result) => {
       result(err, null);
       return;
     }
+    
+    if (res.length) {
+      result(null, res);
+      return;
+    }
 
-    result(null, res);
+    result({kind: "not_found"}, null);
   })
 }
 
